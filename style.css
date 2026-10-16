@@ -42,7 +42,7 @@ header {
 
 .botoesnav {
     display: flex;
-    font-size: 1vw;
+    font-size: 1.2vw;
     gap: 30px;
     list-style: none;
     padding: 0;

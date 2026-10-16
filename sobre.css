@@ -6,17 +6,24 @@
 .titulo-secao {
     text-align: center;
     margin-bottom: 40px;
-    font-weight: 700;
-    font-style: italic;
+    font-size: 300;
+    font-weight: bold;
+    font-family: Lemon Fina;
 }
 
 .abas input[type="radio"] {
     display: none;
 }
 
+.painel > h3 {
+font-size: 200;
+color: #FF006A;
+}
+
 .painel {
     display: none;
     color: white;
+    font-family: Conforta;
 }
 #aba1:checked ~ .conteudo-abas .painel1,
 #aba2:checked ~ .conteudo-abas .painel2,
@@ -37,16 +44,15 @@
     color: #333;
     margin: 0 4px;
     transition: background-color 0.3s, color 0.3s;
+    font-family: Conforta;
 }
 
 .menu-abas .nav-link:hover {
     background-color: #FF006A;
     color: #fff;
+
 }
 
-
-
-/* Destaca o botão da aba marcada */
 #aba1:checked ~ .menu-abas:not(:hover) label[for="aba1"],
 #aba2:checked ~ .menu-abas:not(:hover) label[for="aba2"],
 #aba3:checked ~ .menu-abas:not(:hover) label[for="aba3"],
