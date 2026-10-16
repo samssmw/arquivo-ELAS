@@ -1,0 +1,57 @@
+.secao-sobre {
+    padding: 60px 0;
+    color: white;
+}
+
+.titulo-secao {
+    text-align: center;
+    margin-bottom: 40px;
+    font-weight: 700;
+    font-style: italic;
+}
+
+.abas input[type="radio"] {
+    display: none;
+}
+
+.painel {
+    display: none;
+    color: white;
+}
+#aba1:checked ~ .conteudo-abas .painel1,
+#aba2:checked ~ .conteudo-abas .painel2,
+#aba3:checked ~ .conteudo-abas .painel3,
+#aba4:checked ~ .conteudo-abas .painel4,
+#aba5:checked ~ .conteudo-abas .painel5 {
+    display: block;
+    animation: aparecer 0.4s ease;
+}
+
+@keyframes aparecer {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.menu-abas .nav-link {
+    cursor: pointer;
+    color: #333;
+    margin: 0 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.menu-abas .nav-link:hover {
+    background-color: #FF006A;
+    color: #fff;
+}
+
+
+
+/* Destaca o botão da aba marcada */
+#aba1:checked ~ .menu-abas:not(:hover) label[for="aba1"],
+#aba2:checked ~ .menu-abas:not(:hover) label[for="aba2"],
+#aba3:checked ~ .menu-abas:not(:hover) label[for="aba3"],
+#aba4:checked ~ .menu-abas:not(:hover) label[for="aba4"],
+#aba5:checked ~ .menu-abas:not(:hover) label[for="aba5"] {
+    background-color: #FF006A;
+    color: #fff;
+}
