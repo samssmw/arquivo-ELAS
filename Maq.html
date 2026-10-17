@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Máquina do Tempo</title>
     <link rel="stylesheet" href="style.css">
+    <!-- estilos só desta página (precisa vir DEPOIS do style.css) -->
+    <link rel="stylesheet" href="maq.css">
     <link rel="icon" type="image/png" href="Midias/ELAS.svg">
 </head>
+
 <body>
-      <header>
+    <header>
         <div class="logo">
             <img src="Midias/Atomo.PNG" alt="Atomo">
         </div>
@@ -22,12 +26,138 @@
         </nav>
 
         <div class="icones">
-             <a href="https://www.instagram.com/arquivoe.l.a.s?stkn=MTNpc2JlMHk3cWxpOA==" target="_blank"> 
+            <a href="https://www.instagram.com/arquivoe.l.a.s?stkn=MTNpc2JlMHk3cWxpOA==" target="_blank">
                 <img src="Midias/LogoInstagramRosa.PNG" alt="Instagram">
-             </a>
+            </a>
         </div>
 
     </header>
-    
+
+    <main class="maquina">
+        <div class="palco" id="palco">
+            <img class="peca galaxia" src="Midias/Maq/Galaxia.png" alt="">
+            <img class="peca ampulheta" src="Midias/Maq/AmpulhetaeDetalhes.png" alt="">
+            <img class="peca saturno" src="Midias/Maq/SaturnoePlanta.png" alt="">
+            <img class="peca painel" src="Midias/Maq/Painel.png" alt="">
+            <img class="peca controle" src="Midias/Maq/Controle.png" alt="">
+            <img class="peca mao" src="Midias/Maq/Mao.png" alt="">
+            <img class="peca barra" src="Midias/Maq/Barra.png" alt="">
+            <img class="peca titulo" src="Midias/Maq/Titulo.png" alt="Arquivo E.L.A.S. — Máquina do Tempo">
+
+
+            <img class="peca tela-img" src="Midias/Maq/TelaBranca.png" alt="">
+            <img class="peca tela-img tela-escura" src="Midias/Maq/TelaBrancaSemaTela.png" alt="">
+
+            <button class="visor" id="visor" type="button" disabled>
+                <canvas id="warp" aria-hidden="true"></canvas>
+                <span class="visor-texto">
+                    <span class="visor-ano" id="visor-ano">2026</span>
+                    <span class="visor-dica">clique para entrar</span>
+                </span>
+            </button>
+
+            <!-- bglh de selecionar o ano-->
+            <button class="seta seta-cima" id="ano-mais" type="button" aria-label="Ano mais recente"
+                title="Ano mais recente">
+                <img class="img-on" src="Midias/Maq/Botaonav.png" alt="">
+                <img class="img-off" src="Midias/Maq/Botaonavindisponivel.png" alt="">
+            </button>
+
+            <div class="ano" id="ano" aria-hidden="true"><span>2026</span></div>
+
+            <button class="seta seta-baixo" id="ano-menos" type="button" aria-label="Ano mais antigo"
+                title="Ano mais antigo">
+                <img class="img-on" src="Midias/Maq/Botaonav.png" alt="">
+                <img class="img-off" src="Midias/Maq/Botaonavindisponivel.png" alt="">
+            </button>
+
+            <button class="pronto" id="pronto" type="button" title="Confirmar o ano">
+                <img src="Midias/Maq/Pronto.png" alt="Pronto">
+            </button>
+
+            <!-- controlej -->
+            <!-- botões do controle -->
+            <button class="dpad dpad-cima" id="dp-cima" type="button" aria-label="Ano mais recente"></button>
+            <button class="dpad dpad-baixo" id="dp-baixo" type="button" aria-label="Ano mais antigo"></button>
+            <button class="dpad dpad-esq" id="dp-esq" type="button" aria-label="Ano mais antigo"></button>
+            <button class="dpad dpad-dir" id="dp-dir" type="button" aria-label="Ano mais recente"></button>
+            <button class="dpad dpad-centro" id="dp-centro" type="button" aria-label="Confirmar o ano"></button>
+
+            <!-- quadrados e os relogio -->
+            <div class="quadrados" id="quadrados" aria-hidden="true">
+                <span class="quadrado"></span>
+                <span class="quadrado"></span><span class="quadrado"></span>
+                <span class="quadrado"></span>
+                <span class="quadrado"></span><span class="quadrado"></span>
+                <span class="quadrado"></span><span class="quadrado">
+                </span><span class="quadrado"></span>
+            </div>
+
+            <!-- ponteiros CHATOS-->
+            <div class="relogio relogio-1" data-min="14.19" data-hora="103.87" aria-hidden="true">
+                <img class="r-rosa" src="Midias/Maq/Relogio1.png" alt="">
+                <img class="r-verde" src="Midias/Maq/Relogio1.png" alt="">
+                <svg viewBox="0 0 324 324">
+                    <use class="p-hora" href="#ponteiro-hora" />
+                    <use class="p-min" href="#ponteiro-min" />
+                    <circle cx="162" cy="162" r="3" fill="#e6ece8" />
+                </svg>
+            </div>
+            <div class="relogio relogio-2" data-min="14.19" data-hora="103.87" aria-hidden="true">
+                <img class="r-rosa" src="Midias/Maq/Relogio2.png" alt="">
+                <img class="r-verde" src="Midias/Maq/Relogio2.png" alt="">
+                <svg viewBox="0 0 324 324">
+                    <use class="p-hora" href="#ponteiro-hora" />
+                    <use class="p-min" href="#ponteiro-min" />
+                    <circle cx="162" cy="162" r="3" fill="#e6ece8" />
+                </svg>
+            </div>
+            <div class="relogio relogio-3" data-min="14.19" data-hora="103.87" aria-hidden="true">
+                <img class="r-rosa" src="Midias/Maq/Relogio3.png" alt="">
+                <img class="r-verde" src="Midias/Maq/Relogio3.png" alt="">
+                <svg viewBox="0 0 324 324">
+                    <use class="p-hora" href="#ponteiro-hora" />
+                    <use class="p-min" href="#ponteiro-min" />
+                    <circle cx="162" cy="162" r="3" fill="#e6ece8" />
+                </svg>
+            </div>
+
+            <!-- barrinha :> -->
+            <div class="bola" id="bola" aria-hidden="true">
+                <img src="Midias/Maq/Bola.png" alt="">
+            </div>
+
+            <!-- avisos pros cegos -->
+            <p class="so-leitor" id="status" role="status" aria-live="polite"></p>
+        </div>
+    </main>
+
+    <!-- desenho dos ponteiros -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <defs>
+            <!-- vermelho verde-->
+            <filter id="filtro-verde" color-interpolation-filters="sRGB">
+                <feColorMatrix type="matrix" values="0 1 0 0 0   1 0 0 0 0   0 0 1 0 0   0 0 0 1 0" />
+            </filter>
+            <!-- ponteiro minutos -->
+            <g id="ponteiro-min">
+                <line x1="162" y1="170" x2="162" y2="50" stroke="#cfd6d2" stroke-width="1.6" />
+                <path d="M162 27.5 C164 36 168.6 38 168.6 44.5 A6.6 6.6 0 1 1 155.4 44.5 C155.4 38 160 36 162 27.5 Z"
+                    fill="#fff" />
+            </g>
+            <!-- ponteiro horas -->
+            <g id="ponteiro-hora">
+                <line x1="162" y1="170" x2="162" y2="106" stroke="#cfd6d2" stroke-width="1.6" />
+                <path
+                    d="M162 80.5 C164.5 91 169.2 93 169.2 100.5 A7.2 7.2 0 1 1 154.8 100.5 C154.8 93 159.5 91 162 80.5 Z"
+                    fill="#fff" />
+            </g>
+        </defs>
+    </svg>
+
+    <div class="portal" id="portal"></div>
+
+    <script src="maq.js"></script>
 </body>
+
 </html>

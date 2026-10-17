@@ -13,11 +13,20 @@
     src: url(Fontes/CreatoDisplay-Regular.otf);
 }
 
+html {
+    scrollbar-gutter: stable;   
+}
+
 /* Nav Bar */
 
 body {
     background-color: black;
     overflow-x: hidden; 
+    margin: 0;   
+}
+
+header img {
+    display: block;          
 }
 
 header {
@@ -26,7 +35,8 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    flex-wrap: wrap
+    flex-wrap: wrap;
+
 }
 
 .icones > a > img{
@@ -54,12 +64,12 @@ header {
     text-decoration: none;
     font-family: Conforta ;
     padding: 10px;
+    border-radius: 100px;
 
 }
 
 .botoesnav > li> a:hover{
     background-color:#FF006A;
-    border-radius: 100px;
 }
 
 
