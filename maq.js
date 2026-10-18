@@ -27,6 +27,7 @@ const ANOS = [
     { ano: 1903, pagina: "1903.html" },
 ];
 const DURACAO_CARREGAMENTO = 5200;  
+const TELA_ESCURA = false;
 const VOLTAS_MINUTO = [5, 7, 6];
 const VOLTAS_HORA = [1, 2, 1];
 const BOLA_X_ANTIGO = 485;
@@ -73,7 +74,8 @@ const MOVIMENTO_REDUZIDO = window.matchMedia("(prefers-reduced-motion: reduce)")
 
 ANOS.sort((a, b) => b.ano - a.ano);     
 
-let indice = 0;                          
+let indice = 0;     
+let usouTeclado = false;                        
 let fase = "escolhendo";                 
 
 const anoAtual = () => ANOS[indice];
@@ -143,8 +145,9 @@ function confirmar() {
     dica.rel = "prefetch";
     dica.href = anoAtual().pagina;
     document.head.append(dica);
-
-    palco.classList.add("ligada");      
+     
+    palco.classList.add("ligada");  
+    if (TELA_ESCURA) palco.classList.add("escura");
     moverBola();
     iniciarWarp();
 
@@ -183,7 +186,7 @@ function terminarCarregamento() {
     velocidadeAlvo = 0.35;                
     palco.classList.add("pronta");
     visor.disabled = false;
-    visor.focus({ preventScroll: true });
+    if (usouTeclado) visor.focus({ preventScroll: true });   // quem usa mouse não precisa do foco
     statusEl.textContent = "Pronto. Clique na tela para entrar em " + anoAtual().ano + ".";
 }
 
@@ -225,7 +228,7 @@ function iniciarWarp() {
     }
     medir();
     window.addEventListener("resize", medir);
-
+    const COR_RISCO = TELA_ESCURA ? "#ffffff" : "#232323"
     const novaEstrela = (espalhar) => ({
         x: Math.random() * 2 - 1,
         y: Math.random() * 2 - 1,
@@ -249,7 +252,7 @@ function iniciarWarp() {
 
             const rastro = e.z + Math.max(0.004, velocidade * 0.025);   // quanto maior a velocidade, maior o risco
             ctx.globalAlpha = Math.min(1, (1 - e.z) * 1.5 + 0.1);
-            ctx.strokeStyle = e.rosa ? "#FF006A" : "#ffffff";
+            ctx.strokeStyle = e.rosa ? "#FF006A" : COR_RISCO;;
             ctx.lineWidth = 0.6 + (1 - e.z) * 2.2;
             ctx.beginPath();
             ctx.moveTo(cx + (e.x / rastro) * k, cy + (e.y / rastro) * k);
@@ -300,6 +303,9 @@ dpEsq.addEventListener("click", () => navegar(-1));
 btnPronto.addEventListener("click", confirmar);
 dpCentro.addEventListener("click", confirmar);
 visor.addEventListener("click", viajar);
+
+document.addEventListener("keydown",     () => { usouTeclado = true;  }, true);
+document.addEventListener("pointerdown", () => { usouTeclado = false; }, true);
 
 // setas ano; Enter confirma.
 document.addEventListener("keydown", (e) => {
