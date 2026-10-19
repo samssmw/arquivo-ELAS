@@ -1,24 +1,13 @@
-/*
-   MÁQUINA DO TEMPO — Arquivo E.L.A.S.
-   Arquivo: maq.js
-
-   O que este código faz:
-   1. As setas (e o controle) trocam o ano, só entre os anos da lista ANOS.
-      A seta fica cinza quando não existe ano maior/menor naquela direção.
-   2. "PRONTO" confirma o ano e liga a máquina:
-        - a tela branca escurece e roda uma animação de viagem;
-        - a bolinha da barra anda até a posição do ano (anos antigos = esquerda);
-        - os ponteiros dos relógios giram e os quadradinhos / relógios
-          ficam verdes aos poucos, como uma barra de carregamento.
-   3. Quando termina, a tela fica clicável: um círculo branco cresce
-      e o navegador abre a página do ano.*/
+// MÁQUINA DO TEMPO
+// as setas escolhem o ano, o PRONTO liga a máquina e, quando termina o carregamento,
+// clicar na tela abre a página do ano
 
 
-/* CONFIGURA*/
+// ------------ configurações (é aqui que você mexe) ------------
 
-// "pagina" é o arquivo que abre quando a pessoa clica na tela
-// ATENÇÃO só o 2026 é "de verdade" os outros quatro são EXEMPLOS
-// (pode ter quantos quiser a ordem aqui não importa o código organiza).
+// lista dos anos, do mais novo pro mais antigo
+// "pagina" é o arquivo que abre quando clica na tela no final
+// só o 2026 é de verdade, os outros quatro são exemplos
 const ANOS = [
     { ano: 2026, pagina: "2026.html" },
     { ano: 1988, pagina: "1988.html" },
@@ -26,310 +15,296 @@ const ANOS = [
     { ano: 1952, pagina: "1952.html" },
     { ano: 1903, pagina: "1903.html" },
 ];
-const DURACAO_CARREGAMENTO = 5200;  
-const TELA_ESCURA = false;
+
+// tempo do carregamento em milissegundos (5200 = 5,2 segundos)
+const DURACAO = 5200;
+
+// quantas voltas os ponteiros dão em cada relógio (primeiro, segundo e terceiro)
 const VOLTAS_MINUTO = [5, 7, 6];
 const VOLTAS_HORA = [1, 2, 1];
-const BOLA_X_ANTIGO = 485;
-const BOLA_X_NOVO = 1243;
-const LARGURA_CANVA = 1366;
+
+// posição inicial dos ponteiros, em graus (é a posição que aparece no desenho)
+const ANGULO_MINUTO = 14.19;
+const ANGULO_HORA = 103.87;
+
+// onde a bolinha da barra fica (em %): esquerda = ano mais antigo, direita = ano mais novo
+const BOLA_ANTIGO = 35.5;
+const BOLA_NOVO = 91;
 
 
-/*ELEMENTOS DA PÁGINA*/
+// ------------ pegando os elementos do HTML ------------
 
 const palco = document.getElementById("palco");
-const anoEl = document.getElementById("ano");
 const visor = document.getElementById("visor");
 const visorAno = document.getElementById("visor-ano");
 const canvas = document.getElementById("warp");
+const anoNumero = document.getElementById("ano-numero");
 const bola = document.getElementById("bola");
 const portal = document.getElementById("portal");
-const statusEl = document.getElementById("status");
-const quadrados = [...document.querySelectorAll(".quadrado")];
 
 const btnMais = document.getElementById("ano-mais");
 const btnMenos = document.getElementById("ano-menos");
-const btnPronto = document.getElementById("pronto");
-const dpCima = document.getElementById("dp-cima");
-const dpBaixo = document.getElementById("dp-baixo");
-const dpEsq = document.getElementById("dp-esq");
-const dpDir = document.getElementById("dp-dir");
-const dpCentro = document.getElementById("dp-centro");
 
-const relogios = [...document.querySelectorAll(".relogio")].map((el, i) => ({
-    el,
-    minuto: el.querySelector(".p-min"),
-    hora: el.querySelector(".p-hora"),
-    baseMin: parseFloat(el.dataset.min),
-    baseHora: parseFloat(el.dataset.hora),
-    voltasMin: VOLTAS_MINUTO[i],
-    voltasHora: VOLTAS_HORA[i],
-}));
-
-// epilepticos
-const MOVIMENTO_REDUZIDO = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const botoes = document.querySelectorAll(".palco button");   // todos os botões
+const quadrados = document.querySelectorAll(".quadrado");
+const relogios = document.querySelectorAll(".relogio");
+const ponteirosMinuto = document.querySelectorAll(".p-min");
+const ponteirosHora = document.querySelectorAll(".p-hora");
 
 
-/* ESTADO */
+// ------------ variáveis do programa ------------
 
-ANOS.sort((a, b) => b.ano - a.ano);     
-
-let indice = 0;     
-let usouTeclado = false;                        
-let fase = "escolhendo";                 
-
-const anoAtual = () => ANOS[indice];
+let indice = 0;               // posição do ano escolhido na lista ANOS (0 = 2026)
+let fase = "escolhendo";      // vai mudando: escolhendo -> carregando -> pronta -> viajando
 
 
-/* ESCOLHER O ANO */
-function navegar(direcao) {
-    if (fase !== "escolhendo") return;
-    const novo = indice - direcao;
-    if (novo < 0 || novo >= ANOS.length) {     
-        tremer();
-        return;
-    }
-    indice = novo;
-    mostrarAno(anoAtual().ano, direcao);
+// ------------ escolher o ano ------------
+
+// direcao = 1 vai pro ano mais novo, direcao = -1 vai pro ano mais antigo
+function trocarAno(direcao) {
+    if (fase != "escolhendo") return;
+
+    let novoIndice = indice - direcao;
+
+    // se já está no primeiro ou no último ano da lista, não faz nada
+    if (novoIndice < 0 || novoIndice >= ANOS.length) return;
+
+    indice = novoIndice;
+    visorAno.textContent = ANOS[indice].ano;
+    animarNumero(direcao);
     atualizarBotoes();
-    statusEl.textContent = "Ano selecionado: " + anoAtual().ano;
 }
 
-function mostrarAno(ano, direcao) {
-    const antigo = anoEl.querySelector(".atual") || anoEl.querySelector("span");
-    const novo = document.createElement("span");
-    novo.className = "atual";
-    novo.textContent = ano;
-    visorAno.textContent = ano;
-    antigo.classList.remove("atual");
-    anoEl.append(novo);
-    if (MOVIMENTO_REDUZIDO) { antigo.remove(); return; }
-    const opcoes = { duration: 320, easing: "cubic-bezier(.2,.8,.2,1)", fill: "both" };
-    const entra = direcao > 0 ? "-100%" : "100%";       // ano novo entra por cima
-    const sai = direcao > 0 ? "100%" : "-100%";
-    novo.animate([{ transform: `translateY(${entra})`, opacity: 0 }, { transform: "none", opacity: 1 }], opcoes);
-    antigo.animate([{ transform: "none", opacity: 1 }, { transform: `translateY(${sai})`, opacity: 0 }], opcoes)
-        .finished.then(() => antigo.remove());
+// o número velho sai da pílula e o novo entra, subindo ou descendo
+function animarNumero(direcao) {
+    let saida = direcao > 0 ? "100%" : "-100%";
+    let entrada = direcao > 0 ? "-100%" : "100%";
+
+    anoNumero.animate([
+        { transform: "none", opacity: 1 },
+        { transform: "translateY(" + saida + ")", opacity: 0 }
+    ], 150);
+
+    // espera o número velho sair pra trocar o texto
+    setTimeout(function () {
+        anoNumero.textContent = ANOS[indice].ano;
+        anoNumero.animate([
+            { transform: "translateY(" + entrada + ")", opacity: 0 },
+            { transform: "none", opacity: 1 }
+        ], 150);
+    }, 140);
 }
 
-// Sacudidinha 
-function tremer() {
-    if (MOVIMENTO_REDUZIDO) return;
-    anoEl.animate(
-        [{ transform: "translateX(0)" }, { transform: "translateX(-2.5%)" },
-        { transform: "translateX(2.5%)" }, { transform: "translateX(0)" }],
-        { duration: 240, easing: "ease-in-out" }
-    );
+// deixa uma seta travada (cinza) ou liberada (rosa)
+function ajustarSeta(seta, travada) {
+    seta.disabled = travada;
+    if (travada) {
+        seta.querySelector("img").src = "Midias/Maq/Botaonavindisponivel.png";
+    } else {
+        seta.querySelector("img").src = "Midias/Maq/Botaonav.png";
+    }
 }
 
-// Liga/desliga
 function atualizarBotoes() {
-    const livre = fase === "escolhendo";
+    let travado = (fase != "escolhendo");
 
-    btnMais.disabled = !livre || indice === 0;
-    btnMenos.disabled = !livre || indice === ANOS.length - 1;
+    // depois de apertar o PRONTO todos os botões travam
+    for (const botao of botoes) {
+        botao.disabled = travado;
+    }
 
-    dpCima.disabled = dpBaixo.disabled = dpEsq.disabled = dpDir.disabled = !livre;
-    dpCentro.disabled = btnPronto.disabled = !livre;
+    // as setas também travam quando não tem mais ano naquela direção
+    ajustarSeta(btnMais, travado || indice == 0);
+    ajustarSeta(btnMenos, travado || indice == ANOS.length - 1);
 }
 
-// liga a maq
+
+// ------------ botão PRONTO: liga a máquina ------------
 
 function confirmar() {
-    if (fase !== "escolhendo") return;
+    if (fase != "escolhendo") return;
+
     fase = "carregando";
     atualizarBotoes();
-    statusEl.textContent = "Viajando para " + anoAtual().ano + "…";
 
-    const dica = document.createElement("link");
-    dica.rel = "prefetch";
-    dica.href = anoAtual().pagina;
-    document.head.append(dica);
-     
-    palco.classList.add("ligada");  
-    if (TELA_ESCURA) palco.classList.add("escura");
+    palco.classList.add("ligada");   // a tela liga (o CSS faz ela aparecer)
     moverBola();
-    iniciarWarp();
+    desenharViagem();
 
-    const duracao = MOVIMENTO_REDUZIDO ? 900 : DURACAO_CARREGAMENTO;
-    const inicio = performance.now();
+    // roda a cada quadro da tela (uns 60 vezes por segundo) até o carregamento acabar
+    let inicio = performance.now();
 
-    function passo(agora) {
-        const p = Math.min(1, (agora - inicio) / duracao);   
-        aplicarProgresso(p);
-        if (p < 1) requestAnimationFrame(passo);
-        else terminarCarregamento();
+    function carregar(agora) {
+        let p = (agora - inicio) / DURACAO;   // vai de 0 até 1
+        if (p > 1) p = 1;
+
+        atualizarCarregamento(p);
+
+        if (p < 1) {
+            requestAnimationFrame(carregar);
+        } else {
+            terminar();
+        }
     }
-    requestAnimationFrame(passo);
+    requestAnimationFrame(carregar);
 }
 
-// p vai de 0 (começou) a 1 (terminou)
-function aplicarProgresso(p) {
-    const f = suavizar(p);
+// p é o quanto do carregamento já foi: 0 = começou, 0.5 = metade, 1 = terminou
+function atualizarCarregamento(p) {
+    // deixa o movimento começar e terminar devagar
+    let suave = p * p * (3 - 2 * p);
 
-    // quadradinhos
-    quadrados.forEach((q, i) => q.classList.toggle("ligado", p >= (i + 1) / quadrados.length - 1e-9));
+    // cada quadradinho acende quando o carregamento passa da parte dele
+    for (let i = 0; i < quadrados.length; i++) {
+        quadrados[i].classList.toggle("ligado", p >= (i + 1) / quadrados.length);
+    }
 
-    relogios.forEach((r, i) => {
-        // ponteiros giram
-        r.minuto.setAttribute("transform", `rotate(${r.baseMin + 360 * r.voltasMin * f} 162 162)`);
-        r.hora.setAttribute("transform", `rotate(${r.baseHora + 360 * r.voltasHora * f} 162 162)`);
-        // relógio  verde 
-        r.el.classList.toggle("verde", p >= (i + 1) / relogios.length - 1e-9);
-    });
+    for (let i = 0; i < relogios.length; i++) {
+        // gira os ponteiros: rotate(ângulo, x do centro, y do centro)
+        let anguloMinuto = ANGULO_MINUTO + 360 * VOLTAS_MINUTO[i] * suave;
+        let anguloHora = ANGULO_HORA + 360 * VOLTAS_HORA[i] * suave;
+        ponteirosMinuto[i].setAttribute("transform", "rotate(" + anguloMinuto + " 162 162)");
+        ponteirosHora[i].setAttribute("transform", "rotate(" + anguloHora + " 162 162)");
 
-    velocidadeAlvo = 0.3 + 2.4 * f;      
+        // cada relógio fica verde num terço do carregamento
+        relogios[i].classList.toggle("verde", p >= (i + 1) / relogios.length);
+    }
+
+    // a viagem fica mais rápida no meio do carregamento
+    velocidadeAlvo = 0.3 + 2.4 * suave;
 }
 
-function terminarCarregamento() {
+function terminar() {
     fase = "pronta";
-    velocidadeAlvo = 0.35;                
-    palco.classList.add("pronta");
-    visor.disabled = false;
-    if (usouTeclado) visor.focus({ preventScroll: true });   // quem usa mouse não precisa do foco
-    statusEl.textContent = "Pronto. Clique na tela para entrar em " + anoAtual().ano + ".";
+    velocidadeAlvo = 0.35;               // a viagem desacelera
+    palco.classList.add("pronta");       // o CSS mostra o texto e a tela fica clicável
 }
 
-function suavizar(p) {
-    return p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
-}
-
-// bolinha PROPORCIONAL 
+// a bolinha anda de acordo com o ano: o mais novo fica na direita e o mais antigo na esquerda
 function moverBola() {
-    const anos = ANOS.map(a => a.ano);
-    const maior = Math.max(...anos);
-    const menor = Math.min(...anos);
-    const pos = maior === menor ? 1 : (anoAtual().ano - menor) / (maior - menor);   // 0 a 1
-    const x = BOLA_X_ANTIGO + pos * (BOLA_X_NOVO - BOLA_X_ANTIGO);
-    bola.style.left = (x / LARGURA_CANVA * 100) + "%";
-}
-/* 
-   ANIMAÇÃO DA TELA
-   Troque esta função inteira quando definir a animação final. */
+    let maior = ANOS[0].ano;
+    let menor = ANOS[ANOS.length - 1].ano;
+    let ano = ANOS[indice].ano;
 
-let velocidade = 0.05;
-let velocidadeAlvo = 0.05;
-let warpLigado = false;
-
-function iniciarWarp() {
-    if (warpLigado) return;
-    warpLigado = true;
-
-    const ctx = canvas.getContext("2d");
-    let w = 0, h = 0, ultimo = performance.now();
-
-    function medir() {
-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        w = canvas.clientWidth;
-        h = canvas.clientHeight;
-        canvas.width = w * dpr;
-        canvas.height = h * dpr;
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    // posicao vai de 0 (ano mais antigo) até 1 (ano mais novo)
+    let posicao = 1;
+    if (maior != menor) {
+        posicao = (ano - menor) / (maior - menor);
     }
-    medir();
-    window.addEventListener("resize", medir);
-    const COR_RISCO = TELA_ESCURA ? "#ffffff" : "#232323"
-    const novaEstrela = (espalhar) => ({
-        x: Math.random() * 2 - 1,
-        y: Math.random() * 2 - 1,
-        z: espalhar ? Math.random() * 0.95 + 0.05 : 1,    // z = "distância" da estrela
-        rosa: Math.random() < 0.3,
-    });
-    const estrelas = Array.from({ length: 260 }, () => novaEstrela(true));
+
+    bola.style.left = (BOLA_ANTIGO + posicao * (BOLA_NOVO - BOLA_ANTIGO)) + "%";
+}
+
+
+// ------------ riscos da viagem (desenhados no canvas) ------------
+
+let velocidade = 0.05;        // velocidade de agora
+let velocidadeAlvo = 0.05;    // velocidade que queremos chegar (a de agora vai se aproximando dela)
+
+function desenharViagem() {
+    let ctx = canvas.getContext("2d");
+
+    // ajusta o tamanho do desenho pra não ficar borrado em telas com zoom
+    let zoom = window.devicePixelRatio || 1;
+    let largura = canvas.clientWidth;
+    let altura = canvas.clientHeight;
+    canvas.width = largura * zoom;
+    canvas.height = altura * zoom;
+    ctx.scale(zoom, zoom);
+
+    // cada estrela tem uma posição (x, y) e uma distância (z)
+    // z = 1 é longe e z perto de 0 é perto, quando chega perto ela vira uma estrela nova lá longe
+    function novaEstrela(espalhada) {
+        return {
+            x: Math.random() * 2 - 1,
+            y: Math.random() * 2 - 1,
+            z: espalhada ? Math.random() * 0.95 + 0.05 : 1,
+            rosa: Math.random() < 0.3,     // 30% das estrelas são rosa e o resto cinza
+        };
+    }
+
+    let estrelas = [];
+    for (let i = 0; i < 260; i++) {
+        estrelas.push(novaEstrela(true));
+    }
+
+    let ultimo = performance.now();
 
     function desenhar(agora) {
-        const dt = Math.min(0.05, (agora - ultimo) / 1000);
+        let tempo = (agora - ultimo) / 1000;   // segundos desde o último quadro
         ultimo = agora;
-        velocidade += (velocidadeAlvo - velocidade) * Math.min(1, dt * 2.5);
 
-        ctx.clearRect(0, 0, w, h);
+        // a velocidade vai se aproximando da velocidade alvo aos poucos
+        velocidade = velocidade + (velocidadeAlvo - velocidade) * tempo * 2.5;
+
+        ctx.clearRect(0, 0, largura, altura);
         ctx.lineCap = "round";
-        const cx = w / 2, cy = h / 2, k = h * 0.2;
 
         for (const e of estrelas) {
-            e.z -= velocidade * dt;
-            if (e.z < 0.03) { Object.assign(e, novaEstrela(false)); continue; }
+            e.z = e.z - velocidade * tempo;
 
-            const rastro = e.z + Math.max(0.004, velocidade * 0.025);   // quanto maior a velocidade, maior o risco
-            ctx.globalAlpha = Math.min(1, (1 - e.z) * 1.5 + 0.1);
-            ctx.strokeStyle = e.rosa ? "#FF006A" : COR_RISCO;;
+            // chegou perto demais: vira uma estrela nova lá longe
+            if (e.z < 0.03) {
+                Object.assign(e, novaEstrela(false));
+                continue;
+            }
+
+            // o risco vai do ponto de antes até o ponto de agora (quanto mais rápido, maior o risco)
+            let antes = e.z + Math.max(0.004, velocidade * 0.025);
+            let escala = altura * 0.2;
+
+            ctx.globalAlpha = Math.min(1, (1 - e.z) * 1.5 + 0.1);   // quanto mais perto, mais forte
+            ctx.strokeStyle = e.rosa ? "#FF006A" : "#232323";
             ctx.lineWidth = 0.6 + (1 - e.z) * 2.2;
             ctx.beginPath();
-            ctx.moveTo(cx + (e.x / rastro) * k, cy + (e.y / rastro) * k);
-            ctx.lineTo(cx + (e.x / e.z) * k, cy + (e.y / e.z) * k);
+            ctx.moveTo(largura / 2 + (e.x / antes) * escala, altura / 2 + (e.y / antes) * escala);
+            ctx.lineTo(largura / 2 + (e.x / e.z) * escala, altura / 2 + (e.y / e.z) * escala);
             ctx.stroke();
         }
-        ctx.globalAlpha = 1;
 
-        if (!MOVIMENTO_REDUZIDO) requestAnimationFrame(desenhar);
+        requestAnimationFrame(desenhar);
     }
     requestAnimationFrame(desenhar);
 }
 
 
-/* 
-   ENTRAR NO ANO (clique na tela) */
+// ------------ clicar na tela: entrar no ano ------------
 
 function viajar() {
-    if (fase !== "pronta") return;
+    if (fase != "pronta") return;
+
     fase = "viajando";
-    const destino = anoAtual().pagina;
 
-    if (MOVIMENTO_REDUZIDO) { window.location.href = destino; return; }
+    // o círculo branco nasce no centro da tela e cresce até cobrir a janela inteira
+    let caixa = visor.getBoundingClientRect();
+    let x = caixa.left + caixa.width / 2;
+    let y = caixa.top + caixa.height / 2;
+    let raio = Math.max(window.innerWidth, window.innerHeight) * 1.5;
 
-    //círculo branco
-    const r = visor.getBoundingClientRect();
-    const x = r.left + r.width / 2;
-    const y = r.top + r.height / 2;
-    const raio = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y)) + 24;
+    portal.animate([
+        { clipPath: "circle(0px at " + x + "px " + y + "px)" },
+        { clipPath: "circle(" + raio + "px at " + x + "px " + y + "px)" }
+    ], { duration: 900, easing: "cubic-bezier(.6,0,.9,.5)", fill: "forwards" });
 
-    portal.animate(
-        [{ clipPath: `circle(0px at ${x}px ${y}px)` },
-        { clipPath: `circle(${raio}px at ${x}px ${y}px)` }],
-        { duration: 900, easing: "cubic-bezier(.6,0,.9,.5)", fill: "forwards" }
-    ).finished.then(() => { window.location.href = destino; });
+    // quando o círculo termina de crescer, abre a página do ano
+    setTimeout(function () {
+        window.location.href = ANOS[indice].pagina;
+    }, 900);
 }
 
-
-/* LIGAR OS BOTÕES */
-
-btnMais.addEventListener("click", () => navegar(+1));
-btnMenos.addEventListener("click", () => navegar(-1));
-dpCima.addEventListener("click", () => navegar(+1));
-dpDir.addEventListener("click", () => navegar(+1));
-dpBaixo.addEventListener("click", () => navegar(-1));
-dpEsq.addEventListener("click", () => navegar(-1));
-
-btnPronto.addEventListener("click", confirmar);
-dpCentro.addEventListener("click", confirmar);
-visor.addEventListener("click", viajar);
-
-document.addEventListener("keydown",     () => { usouTeclado = true;  }, true);
-document.addEventListener("pointerdown", () => { usouTeclado = false; }, true);
-
-// setas ano; Enter confirma.
-document.addEventListener("keydown", (e) => {
-    if (e.altKey || e.ctrlKey || e.metaKey) return;
-    switch (e.key) {
-        case "ArrowUp":
-        case "ArrowRight": navegar(+1); break;
-        case "ArrowDown":
-        case "ArrowLeft": navegar(-1); break;
-        case "Enter":
-            if (document.activeElement === document.body) confirmar();
-            return;
-        default: return;
+// se a pessoa voltar pra essa página pelo botão "voltar" do navegador,
+// o navegador mostra ela do jeito que ficou (com o círculo branco na frente)
+// então recarrega a página pra começar do zero
+window.addEventListener("pageshow", function (evento) {
+    if (evento.persisted) {
+        window.location.reload();
     }
-    e.preventDefault();
 });
 
-window.addEventListener("pageshow", (e) => { if (e.persisted) window.location.reload(); });
 
+// ------------ quando a página abre ------------
 
-/* ESTADO INICIAL*/
-
-visorAno.textContent = anoAtual().ano;
-anoEl.querySelector("span").textContent = anoAtual().ano;
-anoEl.querySelector("span").classList.add("atual");
-aplicarProgresso(0);        
+visorAno.textContent = ANOS[0].ano;
+anoNumero.textContent = ANOS[0].ano;
+atualizarCarregamento(0);     // coloca os ponteiros na posição inicial
 atualizarBotoes();

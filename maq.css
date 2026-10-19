@@ -1,114 +1,44 @@
-.maquina {
-    background: #000;
-    overflow-x: auto;
-}
 
 .palco {
-    --entrada: 0s;
-    --px: calc(100cqw / 1366);
-    --rosa: #FF006A;
-    --verde: #00ff6a;
     position: relative;
     width: 100%;
-    min-width: 760px;
-    aspect-ratio: 16 / 9;
-    margin: 0 auto;
-    overflow: hidden;
-    container-type: inline-size;
-    background: #000;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-}
-
-.so-leitor {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
+    aspect-ratio: 16 / 9;   
+    overflow: hidden;      
+    background: black;
+    user-select: none;  
 }
 
 .peca {
     position: absolute;
-    display: block;
-    height: auto;
-    pointer-events: none;
-    -webkit-user-drag: none;
+    pointer-events: none; 
 }
 
-.galaxia {
-    left: -4.346%;
-    top: 81.510%;
-    width: 16.496%;
-    z-index: 1;
-}
+/* fundo */
+.galaxia     { left: -4.346%; top: 81.510%; width: 16.496%; z-index: 1; }
+.engrenagens { left: 0.902%;  top: 1.649%;  width: 6.669%;  z-index: 2; }
+.planta-esq  { left: -0.264%; top: 22.300%; width: 10.783%; z-index: 2; }
+.saturno     { left: 90.431%; top: 1.891%;  width: 16.767%; z-index: 1; }
+.planta-dir  { left: 94.778%; top: 61.806%; width: 10.725%; z-index: 1; }
+.ampulheta   { left: 94.949%; top: 31.545%; width: 11.015%; z-index: 1; }
+.bilhete     { left: 93.250%; top: 78.767%; width: 9.559%;  z-index: 1; }
 
-.ampulheta {
-    left: 93.222%;
-    top: 31.334%;
-    width: 12.916%;
-    z-index: 1;
-}
+/* painéis */
+.painel   { left: 4.353%;  top: 68.758%; width: 26.352%; z-index: 2; }
+.controle { left: 4.073%;   top: 2.292%;  width: 25.305%; z-index: 3; }
+.barra    { left: 29.631%; top: 67.136%; width: 65.356%; z-index: 3; }
+.titulo   { left: 30.046%; top: 64.676%; width: 66.330%; z-index: 4; }
+.tela     { left: 24.173%; top: -6.081%; width: 79.075%; z-index: 3; }
 
-.saturno {
-    left: 90.431%;
-    top: 1.891%;
-    width: 16.767%;
-    z-index: 1;
-}
-
-.painel {
-    left: 4.353%;
-    top: 68.758%;
-    width: 26.352%;
-    z-index: 2;
-}
-
-.controle {
-    left: -0.321%;
-    top: 1.511%;
-    width: 29.648%;
-    z-index: 3;
-}
-
+/* mão com a lupa (o filter faz o contornozinho branco) */
 .mao {
     left: -4.974%;
     top: 49.031%;
     width: 12.400%;
     z-index: 4;
-    filter: drop-shadow(0 0 calc(var(--px) * 1.2) #fff) drop-shadow(0 0 calc(var(--px) * 0.8) #fff);
+    filter: drop-shadow(0 0 0.088vw white) drop-shadow(0 0 0.059vw white);
 }
 
-.barra {
-    left: 29.631%;
-    top: 67.136%;
-    width: 65.356%;
-    z-index: 3;
-}
-
-.titulo {
-    left: 30.046%;
-    top: 64.676%;
-    width: 66.330%;
-    z-index: 4;
-}
-
-.tela-img {
-    left: 24.173%;
-    top: -6.081%;
-    width: 79.075%;
-    z-index: 3;
-}
-
-.tela-escura {
-    opacity: 0;
-    transition: opacity .9s ease;
-}
-
-.palco.escura .tela-escura {
-    opacity: 1;
-}
+/* tela principal */
 
 .visor {
     position: absolute;
@@ -117,32 +47,18 @@
     width: 60.029%;
     height: 57.161%;
     z-index: 5;
-    appearance: none;
-    border: 0;
-    padding: 0;
-    margin: 0;
-    background: transparent;
-    font: inherit;
-    border-radius: calc(var(--px) * 34);
+    border-radius: 2.489vw;
     overflow: hidden;
-    opacity: 0;
-    pointer-events: none;
+    opacity: 0;                  
     transition: opacity .9s ease .2s;
 }
 
-.palco.ligada .visor {
+/* o js coloca a classe "ligada" no palco quando aperta o PRONTO */
+.ligada .visor {
     opacity: 1;
-    pointer-events: auto;
 }
 
-.visor:disabled {
-    cursor: default;
-}
-
-.visor:enabled {
-    cursor: pointer;
-}
-
+/* rosado bem leve nas bordas da tela */
 .visor::before {
     content: "";
     position: absolute;
@@ -150,17 +66,13 @@
     background: radial-gradient(ellipse at 50% 50%, rgba(255, 0, 106, 0) 45%, rgba(255, 0, 106, .1) 100%);
     opacity: 0;
     transition: opacity 1.2s ease;
-    pointer-events: none;
 }
 
-.palco.ligada .visor::before {
+.ligada .visor::before {
     opacity: 1;
 }
 
-.palco.escura .visor::before {
-    display: none;
-}
-
+/* o canvas é onde o js desenha os riscos da viagem */
 .visor canvas {
     position: absolute;
     inset: 0;
@@ -168,6 +80,7 @@
     height: 100%;
 }
 
+/* texto que aparece no final: o ano e "clique para entrar" */
 .visor-texto {
     position: absolute;
     inset: 0;
@@ -175,95 +88,83 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: calc(var(--px) * 14);
+    gap: 1.025vw;
     opacity: 0;
     transform: scale(.9);
     transition: opacity .7s ease, transform .7s cubic-bezier(.2, .8, .2, 1);
     color: #262626;
-    text-shadow: 0 0 calc(var(--px) * 22) #fff, 0 0 calc(var(--px) * 6) #fff;
+    text-shadow: 0 0 1.611vw white, 0 0 0.439vw white;
     background: radial-gradient(ellipse 36% 32% at 50% 50%, rgba(255, 255, 255, .9), transparent);
 }
 
 .visor-ano {
     font-family: Lemon Fina, Creato, sans-serif;
-    font-size: calc(var(--px) * 130);
+    font-size: 9.517vw;
     line-height: 1;
     letter-spacing: .04em;
-    color: var(--rosa);
+    color: #FF006A;
 }
 
 .visor-dica {
     font-family: Conforta, sans-serif;
-    font-size: calc(var(--px) * 24);
+    font-size: 1.757vw;
     letter-spacing: .08em;
 }
 
-.palco.pronta .visor-texto {
+/* o js coloca a classe "pronta" quando o carregamento termina */
+.pronta .visor {
+    cursor: pointer;
+    animation: pulsar 2.4s ease-in-out infinite;
+}
+
+.pronta .visor:hover {
+    background: rgba(255, 0, 106, .07);
+}
+
+.pronta .visor-texto {
     opacity: 1;
     transform: none;
 }
 
-.palco.pronta .visor {
-    animation: pulsar 2.4s ease-in-out infinite;
-}
-
-.palco.pronta .visor:hover {
-    background: rgba(255, 0, 106, .07);
-}
-
-.palco.escura .visor-texto {
-    color: #fff;
-    text-shadow: 0 0 calc(var(--px) * 26) rgba(255, 0, 106, .95);
-    background: radial-gradient(ellipse 36% 32% at 50% 50%, rgba(0, 0, 0, .55), transparent);
-}
-
-.palco.escura .visor-ano {
-    color: #fff;
-}
-
-.palco.escura.pronta .visor:hover {
-    background: rgba(255, 0, 106, .12);
-}
-
+/* a borda rosa fica "respirando" */
 @keyframes pulsar {
-
-    0%,
-    100% {
-        box-shadow: inset 0 0 calc(var(--px) * 10) rgba(255, 0, 106, .12);
-    }
-
-    50% {
-        box-shadow: inset 0 0 calc(var(--px) * 30) rgba(255, 0, 106, .38);
-    }
+    0%, 100% { box-shadow: inset 0 0 0.732vw rgba(255, 0, 106, .12); }
+    50%      { box-shadow: inset 0 0 2.196vw rgba(255, 0, 106, .38); }
 }
 
-.seta {
+
+/* ---------- botões ---------- */
+
+/* vale para todos os botões do palco */
+.palco button {
     position: absolute;
     z-index: 6;
-    left: 6.808%;
-    width: 20.205%;
-    height: 4.948%;
-    appearance: none;
-    border: 0;
-    padding: 0;
+    border: none;
     background: none;
+    padding: 0;
     cursor: pointer;
 }
 
-.seta-cima {
-    top: 31.901%;
+/* botão travado: não reage a mouse nenhum */
+.palco button:disabled {
+    pointer-events: none;
 }
 
-.seta-baixo {
-    top: 47.005%;
+
+/* ---------- seleção do ano ---------- */
+
+.seta {
+    left: 6.808%;
+    width: 20.205%;
+    height: 4.948%;
 }
+
+.seta-cima  { top: 31.901%; }
+.seta-baixo { top: 47.005%; }
 
 .seta img {
     position: absolute;
-    display: block;
-    height: auto;
     width: 106.193%;
-    pointer-events: none;
     transition: filter .2s, transform .12s;
 }
 
@@ -272,40 +173,22 @@
     top: -15.036%;
 }
 
+/* a seta de baixo é a mesma imagem, só que virada de cabeça pra baixo */
 .seta-baixo img {
     left: -4.036%;
     top: -78.164%;
     transform: rotate(180deg);
 }
 
-.seta-baixo:active:enabled img {
-    transform: rotate(180deg) translateY(calc(var(--px) * 2));
+.seta:hover img {
+    filter: brightness(1.15) drop-shadow(0 0 0.586vw rgba(255, 0, 106, .8));
 }
 
-.seta-cima:active:enabled img {
-    transform: translateY(calc(var(--px) * 2));
-}
+/* efeito de apertar */
+.seta-cima:active img  { transform: translateY(0.146vw); }
+.seta-baixo:active img { transform: rotate(180deg) translateY(0.146vw); }
 
-.seta:hover:enabled img {
-    filter: brightness(1.15) drop-shadow(0 0 calc(var(--px) * 8) rgba(255, 0, 106, .8));
-}
-
-.seta .img-off {
-    display: none;
-}
-
-.seta:disabled .img-on {
-    display: none;
-}
-
-.seta:disabled .img-off {
-    display: block;
-}
-
-.seta:disabled {
-    cursor: default;
-}
-
+/* a pílula branca com o ano */
 .ano {
     position: absolute;
     z-index: 5;
@@ -313,119 +196,73 @@
     top: 36.849%;
     width: 20.205%;
     height: 10.156%;
-    overflow: hidden;
-    border-radius: calc(var(--px) * 39);
+    overflow: hidden;       /* o número some ao sair da pílula */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2.855vw;
     background: linear-gradient(#bfbfbf 0%, #ffffff 30%, #ffffff 62%, #d3d3d3 100%);
-    box-shadow: 0 calc(var(--px) * 6) calc(var(--px) * 12) rgba(0, 0, 0, .6);
+    box-shadow: 0 0.439vw 0.878vw rgba(0, 0, 0, .6);
     font-family: Creato, "Century Gothic", "Josefin Sans", Futura, sans-serif;
-    color: var(--rosa);
-}
-
-.ano span {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    place-items: center;
-    font-size: calc(var(--px) * 66);
+    font-size: 4.832vw;
     line-height: 1;
-    -webkit-text-stroke: calc(var(--px) * 1) var(--rosa);
+    color: #FF006A;
+    -webkit-text-stroke: 0.073vw #FF006A;   /* deixa o número um pouco mais grosso */
 }
 
 .pronto {
-    position: absolute;
-    z-index: 6;
     left: 8.556%;
     top: 51.799%;
     width: 15.858%;
     height: 12.908%;
-    appearance: none;
-    border: 0;
-    padding: 0;
-    background: none;
-    cursor: pointer;
 }
 
 .pronto img {
+    display: block;
     width: 100%;
     height: 100%;
-    display: block;
     transition: transform .2s, filter .2s;
 }
 
-.pronto:hover:enabled img {
+.pronto:hover img {
     transform: rotate(-2.5deg) scale(1.05);
 }
 
-.pronto:active:enabled img {
+.pronto:active img {
     transform: scale(.96);
 }
 
-.pronto:disabled {
-    cursor: default;
-}
-
+/* depois de apertar, o PRONTO escurece */
 .pronto:disabled img {
     filter: brightness(.82);
 }
 
+
+/* ---------- controle (botões invisíveis em cima do desenho) ---------- */
+
 .dpad {
-    position: absolute;
-    z-index: 6;
-    appearance: none;
-    border: 0;
-    padding: 0;
-    background: transparent;
+    width: 3.807%;
+    height: 6.771%;
     border-radius: 50%;
-    cursor: pointer;
     transition: box-shadow .2s, background-color .12s;
 }
 
-.dpad:hover:enabled {
-    box-shadow: 0 0 calc(var(--px) * 14) rgba(255, 0, 106, .7), inset 0 0 calc(var(--px) * 10) rgba(255, 0, 106, .35);
+.dpad:hover {
+    box-shadow: 0 0 1.025vw rgba(255, 0, 106, .7), inset 0 0 0.732vw rgba(255, 0, 106, .35);
 }
 
-.dpad:active:enabled {
+.dpad:active {
     background: rgba(255, 0, 106, .3);
 }
 
-.dpad:disabled {
-    cursor: default;
-}
+.dpad-cima   { left: 14.898%; top: 5.794%; }
+.dpad-baixo  { left: 14.898%; top: 21.289%; }
+.dpad-esq    { left: 10.615%; top: 13.542%; }
+.dpad-dir    { left: 19.253%; top: 13.542%; }
+.dpad-centro { left: 14.641%; top: 13.021%; width: 4.392%; height: 7.812%; }
 
-.dpad-cima {
-    left: 14.898%;
-    top: 5.794%;
-    width: 3.807%;
-    height: 6.771%;
-}
 
-.dpad-baixo {
-    left: 14.898%;
-    top: 21.289%;
-    width: 3.807%;
-    height: 6.771%;
-}
-
-.dpad-esq {
-    left: 10.615%;
-    top: 13.542%;
-    width: 3.807%;
-    height: 6.771%;
-}
-
-.dpad-dir {
-    left: 19.253%;
-    top: 13.542%;
-    width: 3.807%;
-    height: 6.771%;
-}
-
-.dpad-centro {
-    left: 14.641%;
-    top: 13.021%;
-    width: 4.392%;
-    height: 7.812%;
-}
+/* ---------- quadradinhos e relógios ---------- */
 
 .quadrados {
     position: absolute;
@@ -439,32 +276,41 @@
 }
 
 .quadrado {
-    width: calc(var(--px) * 21);
+    width: 1.537vw;
     height: 100%;
-    background: #fff;
+    background: white;
     transition: background-color .35s, box-shadow .35s;
 }
 
+/* o JS coloca a classe "ligado" em cada quadrado conforme o carregamento */
 .quadrado.ligado {
-    background: var(--verde);
-    box-shadow: 0 0 calc(var(--px) * 9) rgba(0, 255, 106, .85);
+    background: #00ff6a;
+    box-shadow: 0 0 0.659vw rgba(0, 255, 106, .85);
 }
 
 .relogio {
     position: absolute;
     z-index: 4;
+    width: 7.163%;
+    height: 12.740%;
 }
 
+.relogio-1 { left: 5.326%;  top: 80.947%; }
+.relogio-2 { left: 13.108%; top: 80.869%; }
+.relogio-3 { left: 20.956%; top: 80.712%; }
+
+/* dentro de cada relógio ficam duas imagens iguais e os ponteiros (svg) por cima */
 .relogio img,
 .relogio svg {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
-    display: block;
 }
 
-.relogio .r-verde {
+/* a segunda imagem passa pelo filtro que deixa verde (está no fim do Maq.html)
+   e começa invisível. Quando o relógio ganha a classe "verde" ela aparece */
+.r-verde {
     opacity: 0;
     filter: url(#filtro-verde);
     transition: opacity .7s ease;
@@ -474,181 +320,114 @@
     opacity: 1;
 }
 
-.relogio-1 {
-    left: 5.326%;
-    top: 80.947%;
-    width: 7.163%;
-    height: 12.740%;
-}
 
-.relogio-2 {
-    left: 13.108%;
-    top: 80.869%;
-    width: 7.163%;
-    height: 12.740%;
-}
-
-.relogio-3 {
-    left: 20.956%;
-    top: 80.712%;
-    width: 7.163%;
-    height: 12.740%;
-}
+/* ---------- bolinha da barra ---------- */
 
 .bola {
     position: absolute;
     z-index: 5;
-    left: 90.996%;
+    left: 90.996%;      /* o JS muda esse valor para a bolinha andar */
     top: 73.307%;
     width: 2.972%;
     aspect-ratio: 1;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);   /* centraliza a bolinha no ponto left/top */
     border-radius: 50%;
-    box-shadow: 0 0 0 calc(var(--px) * 4) #f3f3f3, 0 calc(var(--px) * 2) calc(var(--px) * 7) calc(var(--px) * 4) rgba(0, 0, 0, .3);
+    box-shadow: 0 0 0 0.293vw #f3f3f3, 0 0.146vw 0.512vw 0.293vw rgba(0, 0, 0, .3);
     transition: left 2.8s cubic-bezier(.65, 0, .3, 1) .5s;
-    pointer-events: none;
 }
 
 .bola img {
+    display: block;
     width: 100%;
     height: 100%;
-    display: block;
 }
 
-.palco button:focus-visible {
-    outline: calc(var(--px) * 3) solid #fff;
-    outline-offset: calc(var(--px) * 2);
-}
+
+/* ---------- círculo branco da transição final ---------- */
 
 .portal {
     position: fixed;
     inset: 0;
     z-index: 1000;
-    background: #fff;
-    clip-path: circle(0 at 50% 50%);
+    background: white;
+    clip-path: circle(0 at 50% 50%);   /* começa com tamanho zero, o JS faz crescer */
     pointer-events: none;
 }
 
-/* ---------- ANIMAÇÕES DE ENTRADA ---------- */
-@keyframes maq-surgir {
-    from {
-        opacity: 0;
-        scale: .95;
-    }
+
+/* ---------- animações de entrada ---------- */
+
+@keyframes surgir          { from { opacity: 0; scale: .95; } }
+@keyframes fade            { from { opacity: 0; } }
+@keyframes entrar-esquerda { from { opacity: 0; translate: -3.66vw 0; } }
+@keyframes entrar-direita  { from { opacity: 0; translate: 3.66vw 0; } }
+@keyframes entrar-baixo    { from { opacity: 0; translate: 0 2.928vw; } }
+
+/* a lupa balança, para um pouco e repete */
+@keyframes lupa-investiga {
+    0%, 38%, 100% { rotate: 0deg;    translate: 0 0; }
+    9%            { rotate: -5deg;   translate: -0.22vw -0.22vw; }
+    21%           { rotate: 4.5deg;  translate: 0.293vw 0.146vw; }
+    31%           { rotate: -1.5deg; translate: 0 0; }
 }
 
-@keyframes maq-aparecer {
-    from {
-        opacity: 0;
-    }
+/* animation: nome  duração  curva  atraso  backwards
+   o "backwards" deixa a imagem invisível enquanto espera o atraso */
+.tela      { animation: surgir .8s ease-out 0s backwards; }
+.controle  { animation: entrar-esquerda .7s ease-out .2s backwards; }
+.seta, .ano, .pronto { animation: entrar-esquerda .7s ease-out .35s backwards; }
+.painel    { animation: entrar-esquerda .7s ease-out .4s backwards; }
+.barra     { animation: entrar-baixo .7s ease-out .45s backwards; }
+.quadrados { animation: fade .6s ease-out .6s backwards; }
+.titulo    { animation: entrar-baixo .7s ease-out .6s backwards; }
+.relogio-1 { animation: surgir .6s ease-out .6s backwards; }
+.relogio-2 { animation: surgir .6s ease-out .72s backwards; }
+.relogio-3 { animation: surgir .6s ease-out .84s backwards; }
+.bola      { animation: fade .7s ease-out .75s backwards; }
+.galaxia   { animation: entrar-esquerda .8s ease-out .9s backwards; }
+.saturno   { animation: entrar-direita .8s ease-out 1.1s backwards; }
+
+/* detalhes dos lados que se mexem sozinhos.
+   girar, vento e balanco são keyframes que já existem no style.css.
+   O transform-origin é o ponto em volta do qual a imagem gira.
+   As animações que repetem (infinite) não têm atraso, assim não dão "pulo" quando começam. */
+
+/* as engrenagens giram bem devagar (uma volta a cada 60 segundos) */
+.engrenagens {
+    animation: fade .6s ease-out .9s backwards,
+               girar 60s linear infinite;
 }
 
-@keyframes maq-entrar-esquerda {
-    from {
-        opacity: 0;
-        translate: calc(var(--px) * -50) 0;
-    }
+/* as plantas balançam como se tivesse vento, presas na base do caule */
+.planta-esq {
+    transform-origin: 84% 100%;
+    animation: entrar-esquerda .8s ease-out .9s backwards,
+               vento 8s ease-in-out infinite;
 }
 
-@keyframes maq-entrar-direita {
-    from {
-        opacity: 0;
-        translate: calc(var(--px) * 50) 0;
-    }
+.planta-dir {
+    transform-origin: 79% 100%;
+    animation: entrar-direita .8s ease-out 1.05s backwards,
+               vento 9s ease-in-out infinite;   /* duração diferente da outra planta, pra não balançarem juntas */
 }
 
-@keyframes maq-entrar-baixo {
-    from {
-        opacity: 0;
-        translate: 0 calc(var(--px) * 40);
-    }
-}
-@keyframes maq-investigar {
-
-    0%,
-    38%,
-    100% {
-        rotate: 0deg;
-        translate: 0 0;
-    }
-
-    9% {
-        rotate: -5deg;
-        translate: calc(var(--px) * -3) calc(var(--px) * -3);
-    }
-
-    21% {
-        rotate: 4.5deg;
-        translate: calc(var(--px) * 4) calc(var(--px) * 2);
-    }
-
-    31% {
-        rotate: -1.5deg;
-        translate: 0 0;
-    }
-}
-
-.tela-img:not(.tela-escura) {
-    animation: maq-surgir .8s ease-out calc(var(--entrada) + 0s) backwards;
-}
-
-.controle {
-    animation: maq-entrar-esquerda .7s ease-out calc(var(--entrada) + .20s) backwards;
-}
-
-.seta,
-.ano,
-.pronto {
-    animation: maq-entrar-esquerda .7s ease-out calc(var(--entrada) + .35s) backwards;
-}
-
-.painel {
-    animation: maq-entrar-esquerda .7s ease-out calc(var(--entrada) + .40s) backwards;
-}
-
-.quadrados {
-    animation: maq-aparecer .6s ease-out calc(var(--entrada) + .60s) backwards;
-}
-
-.relogio-1 {
-    animation: maq-surgir .6s ease-out calc(var(--entrada) + .60s) backwards;
-}
-
-.relogio-2 {
-    animation: maq-surgir .6s ease-out calc(var(--entrada) + .72s) backwards;
-}
-
-.relogio-3 {
-    animation: maq-surgir .6s ease-out calc(var(--entrada) + .84s) backwards;
-}
-
-.barra {
-    animation: maq-entrar-baixo .7s ease-out calc(var(--entrada) + .45s) backwards;
-}
-
-.bola {
-    animation: maq-aparecer .7s ease-out calc(var(--entrada) + .75s) backwards;
-}
-
-.titulo {
-    animation: maq-entrar-baixo .7s ease-out calc(var(--entrada) + .60s) backwards;
-}
-
-.galaxia {
-    animation: maq-entrar-esquerda .8s ease-out calc(var(--entrada) + .90s) backwards;
-}
-
+/* a ampulheta balança bem devagar, apoiada na base */
 .ampulheta {
-    animation: maq-entrar-direita .8s ease-out calc(var(--entrada) + 1.00s) backwards;
+    transform-origin: 50% 95%;
+    animation: entrar-direita .8s ease-out 1s backwards,
+               vento 10s ease-in-out infinite;
 }
 
-.saturno {
-    animation: maq-entrar-direita .8s ease-out calc(var(--entrada) + 1.10s) backwards;
+/* o bilhete balança preso na fitinha de cima */
+.bilhete {
+    transform-origin: 62% 3%;
+    animation: entrar-direita .8s ease-out 1.15s backwards,
+               balanco 6s ease-in-out infinite;
 }
 
+/* a mão primeiro entra e depois começa a balançar (duas animações separadas por vírgula) */
 .mao {
-    transform-origin: 25% 88%;
-    animation:
-        maq-entrar-esquerda .8s ease-out calc(var(--entrada) + 1.00s) backwards,
-        maq-investigar 9s ease-in-out calc(var(--entrada) + 2.60s) infinite;
+    transform-origin: 25% 88%;   /* ponto onde a mão gira (o pulso) */
+    animation: entrar-esquerda .8s ease-out 1s backwards,
+               lupa-investiga 9s ease-in-out 2.6s infinite;
 }

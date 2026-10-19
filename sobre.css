@@ -15,9 +15,30 @@
     display: none;
 }
 
+.painel > hr {
+    color: #FF006A;
+    border: solid 1px;
+}
+
 .painel > h3 {
 font-size: 200;
 color: #FF006A;
+}
+
+.painel > h2 {
+    font-size: 4vh;
+}
+
+.painel > a#regulamento{
+    background-color: #FF006A;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.painel > a#regulamento:hover {
+    background-color: #fff;
+    color: #FF006A;
 }
 
 .painel {
@@ -61,3 +82,5 @@ color: #FF006A;
     background-color: #FF006A;
     color: #fff;
 }
+
+
