@@ -1,9 +1,5 @@
-// MÁQUINA DO TEMPO
-// as setas escolhem o ano, o PRONTO liga a máquina e, quando termina o carregamento,
-// clicar na tela abre a página do ano
 
-
-// ------------ configurações (é aqui que você mexe) ------------
+//  configurações 
 
 // lista dos anos, do mais novo pro mais antigo
 // "pagina" é o arquivo que abre quando clica na tela no final
@@ -16,23 +12,26 @@ const ANOS = [
     { ano: 1903, pagina: "1903.html" },
 ];
 
-// tempo do carregamento em milissegundos (5200 = 5,2 segundos)
+// tempo do carregamento
 const DURACAO = 5200;
 
-// quantas voltas os ponteiros dão em cada relógio (primeiro, segundo e terceiro)
+// quanto tempo a pasta do arquivo fica parada na tela antes de subir
+const ARQUIVO_FICA = 1500;
+
+// quantas voltas os ponteiros dão em cada relógio
 const VOLTAS_MINUTO = [5, 7, 6];
 const VOLTAS_HORA = [1, 2, 1];
 
-// posição inicial dos ponteiros, em graus (é a posição que aparece no desenho)
+// posição inicial dos ponteiros, em graus
 const ANGULO_MINUTO = 14.19;
 const ANGULO_HORA = 103.87;
 
-// onde a bolinha da barra fica (em %): esquerda = ano mais antigo, direita = ano mais novo
+// onde a bolinha da barra fica: esquerda = ano mais antigo direita = ano mais novo
 const BOLA_ANTIGO = 35.5;
 const BOLA_NOVO = 91;
 
 
-// ------------ pegando os elementos do HTML ------------
+// pegando os elementos do HTML
 
 const palco = document.getElementById("palco");
 const visor = document.getElementById("visor");
@@ -41,24 +40,25 @@ const canvas = document.getElementById("warp");
 const anoNumero = document.getElementById("ano-numero");
 const bola = document.getElementById("bola");
 const portal = document.getElementById("portal");
+const arquivo = document.getElementById("arquivo");
 
 const btnMais = document.getElementById("ano-mais");
 const btnMenos = document.getElementById("ano-menos");
 
-const botoes = document.querySelectorAll(".palco button");   // todos os botões
+const botoes = document.querySelectorAll(".palco button");  
 const quadrados = document.querySelectorAll(".quadrado");
 const relogios = document.querySelectorAll(".relogio");
 const ponteirosMinuto = document.querySelectorAll(".p-min");
 const ponteirosHora = document.querySelectorAll(".p-hora");
 
 
-// ------------ variáveis do programa ------------
+//variáveis do programa 
 
-let indice = 0;               // posição do ano escolhido na lista ANOS (0 = 2026)
+let indice = 0;              
 let fase = "escolhendo";      // vai mudando: escolhendo -> carregando -> pronta -> viajando
 
 
-// ------------ escolher o ano ------------
+//  escolher o ano 
 
 // direcao = 1 vai pro ano mais novo, direcao = -1 vai pro ano mais antigo
 function trocarAno(direcao) {
@@ -66,7 +66,7 @@ function trocarAno(direcao) {
 
     let novoIndice = indice - direcao;
 
-    // se já está no primeiro ou no último ano da lista, não faz nada
+    // se já ta no primeiro ou no último ano da lista, não faz nada
     if (novoIndice < 0 || novoIndice >= ANOS.length) return;
 
     indice = novoIndice;
@@ -75,7 +75,7 @@ function trocarAno(direcao) {
     atualizarBotoes();
 }
 
-// o número velho sai da pílula e o novo entra, subindo ou descendo
+// o numero velho sai do treco do ano e o novo entra, subindo ou descendo
 function animarNumero(direcao) {
     let saida = direcao > 0 ? "100%" : "-100%";
     let entrada = direcao > 0 ? "-100%" : "100%";
@@ -95,7 +95,7 @@ function animarNumero(direcao) {
     }, 140);
 }
 
-// deixa uma seta travada (cinza) ou liberada (rosa)
+// deixa uma seta travada ou liberada
 function ajustarSeta(seta, travada) {
     seta.disabled = travada;
     if (travada) {
@@ -119,7 +119,7 @@ function atualizarBotoes() {
 }
 
 
-// ------------ botão PRONTO: liga a máquina ------------
+// botão PRONTO liga a máquina
 
 function confirmar() {
     if (fase != "escolhendo") return;
@@ -127,15 +127,15 @@ function confirmar() {
     fase = "carregando";
     atualizarBotoes();
 
-    palco.classList.add("ligada");   // a tela liga (o CSS faz ela aparecer)
+    palco.classList.add("ligada");  
     moverBola();
     desenharViagem();
 
-    // roda a cada quadro da tela (uns 60 vezes por segundo) até o carregamento acabar
+    // roda a cada quadro da tela até o carregamento acabar
     let inicio = performance.now();
 
     function carregar(agora) {
-        let p = (agora - inicio) / DURACAO;   // vai de 0 até 1
+        let p = (agora - inicio) / DURACAO; 
         if (p > 1) p = 1;
 
         atualizarCarregamento(p);
@@ -149,7 +149,7 @@ function confirmar() {
     requestAnimationFrame(carregar);
 }
 
-// p é o quanto do carregamento já foi: 0 = começou, 0.5 = metade, 1 = terminou
+// p é o quanto do carregamento ja foi 0 = começou 0.5 = metade 1 = terminou
 function atualizarCarregamento(p) {
     // deixa o movimento começar e terminar devagar
     let suave = p * p * (3 - 2 * p);
@@ -160,27 +160,27 @@ function atualizarCarregamento(p) {
     }
 
     for (let i = 0; i < relogios.length; i++) {
-        // gira os ponteiros: rotate(ângulo, x do centro, y do centro)
+        // gira os ponteiros com rotate(ângulo, x do centro, y do centro)
         let anguloMinuto = ANGULO_MINUTO + 360 * VOLTAS_MINUTO[i] * suave;
         let anguloHora = ANGULO_HORA + 360 * VOLTAS_HORA[i] * suave;
         ponteirosMinuto[i].setAttribute("transform", "rotate(" + anguloMinuto + " 162 162)");
         ponteirosHora[i].setAttribute("transform", "rotate(" + anguloHora + " 162 162)");
 
-        // cada relógio fica verde num terço do carregamento
+        // cada relógio fica verde
         relogios[i].classList.toggle("verde", p >= (i + 1) / relogios.length);
     }
 
     // a viagem fica mais rápida no meio do carregamento
     velocidadeAlvo = 0.3 + 2.4 * suave;
 }
-
+// a viagem desacelera e o CSS mostra o texto e a tela fica clicável
 function terminar() {
     fase = "pronta";
-    velocidadeAlvo = 0.35;               // a viagem desacelera
-    palco.classList.add("pronta");       // o CSS mostra o texto e a tela fica clicável
+    velocidadeAlvo = 0.35;               
+    palco.classList.add("pronta");      
 }
 
-// a bolinha anda de acordo com o ano: o mais novo fica na direita e o mais antigo na esquerda
+// a bolinha anda de acordo com o ano
 function moverBola() {
     let maior = ANOS[0].ano;
     let menor = ANOS[ANOS.length - 1].ano;
@@ -196,10 +196,10 @@ function moverBola() {
 }
 
 
-// ------------ riscos da viagem (desenhados no canvas) ------------
+// riscos da viagem
 
-let velocidade = 0.05;        // velocidade de agora
-let velocidadeAlvo = 0.05;    // velocidade que queremos chegar (a de agora vai se aproximando dela)
+let velocidade = 0.05;        
+let velocidadeAlvo = 0.05;   
 
 function desenharViagem() {
     let ctx = canvas.getContext("2d");
@@ -219,7 +219,7 @@ function desenharViagem() {
             x: Math.random() * 2 - 1,
             y: Math.random() * 2 - 1,
             z: espalhada ? Math.random() * 0.95 + 0.05 : 1,
-            rosa: Math.random() < 0.3,     // 30% das estrelas são rosa e o resto cinza
+            rosa: Math.random() < 0.3,   
         };
     }
 
@@ -231,7 +231,7 @@ function desenharViagem() {
     let ultimo = performance.now();
 
     function desenhar(agora) {
-        let tempo = (agora - ultimo) / 1000;   // segundos desde o último quadro
+        let tempo = (agora - ultimo) / 1000;   
         ultimo = agora;
 
         // a velocidade vai se aproximando da velocidade alvo aos poucos
@@ -243,13 +243,13 @@ function desenharViagem() {
         for (const e of estrelas) {
             e.z = e.z - velocidade * tempo;
 
-            // chegou perto demais: vira uma estrela nova lá longe
+            // chegou perto demais vira uma estrela nova lá longe
             if (e.z < 0.03) {
                 Object.assign(e, novaEstrela(false));
                 continue;
             }
 
-            // o risco vai do ponto de antes até o ponto de agora (quanto mais rápido, maior o risco)
+            // o risco vai do ponto de antes até o ponto de agora 
             let antes = e.z + Math.max(0.004, velocidade * 0.025);
             let escala = altura * 0.2;
 
@@ -268,14 +268,14 @@ function desenharViagem() {
 }
 
 
-// ------------ clicar na tela: entrar no ano ------------
+// clicar na tela: entrar no ano 
 
 function viajar() {
     if (fase != "pronta") return;
 
     fase = "viajando";
 
-    // o círculo branco nasce no centro da tela e cresce até cobrir a janela inteira
+    // o circulo branco nasce no centro da tela e cresce ate cobrir a janela inteira
     let caixa = visor.getBoundingClientRect();
     let x = caixa.left + caixa.width / 2;
     let y = caixa.top + caixa.height / 2;
@@ -286,7 +286,7 @@ function viajar() {
         { clipPath: "circle(" + raio + "px at " + x + "px " + y + "px)" }
     ], { duration: 900, easing: "cubic-bezier(.6,0,.9,.5)", fill: "forwards" });
 
-    // quando o círculo termina de crescer, abre a página do ano
+    // quando o circulo termina de crescer abre a página do ano
     setTimeout(function () {
         window.location.href = ANOS[indice].pagina;
     }, 900);
@@ -302,9 +302,49 @@ window.addEventListener("pageshow", function (evento) {
 });
 
 
-// ------------ quando a página abre ------------
+// abertura
+
+// quando a página abre, a pasta do arquivo cobre a máquina
+// ela fica parada um tempinho, sobe um pouquinho e depois desce até sair da tela
+// quando ela termina de descer, a máquina aparece com as animações normais do maq.css
+
+function abrirArquivo() {
+    // fica parada o tempo do ARQUIVO_FICA e depois sobe um pouquinho
+    setTimeout(subirUmPouco, ARQUIVO_FICA);
+}
+
+function subirUmPouco() {
+    // o translateY com % usa a altura da própria pasta, então -6% é "um pouquinho" pra cima
+    let subida = arquivo.animate([
+        { transform: "none" },
+        { transform: "translateY(-6%)" }
+    ], { duration: 400, easing: "ease-out", fill: "forwards" });
+
+    // quando termina de subir, ela desce
+    subida.onfinish = descer;
+}
+
+function descer() {
+    let descida = arquivo.animate([
+        { transform: "translateY(-6%)" },
+        { transform: "translateY(105%)" }    
+    ], { duration: 800, easing: "ease-in", fill: "forwards" });
+
+    // quando a pasta some da tela, ela é tirada do HTML (assim não atrapalha os cliques)
+    // e a classe "antes" sai as animações de entrada da máquina começam a rodar
+    descida.onfinish = function () {
+        arquivo.remove();
+        palco.classList.remove("antes");
+    };
+}
+
+
+//  quando a página abre
 
 visorAno.textContent = ANOS[0].ano;
 anoNumero.textContent = ANOS[0].ano;
-atualizarCarregamento(0);     // coloca os ponteiros na posição inicial
+atualizarCarregamento(0);     
 atualizarBotoes();
+
+// a pasta fica na tela até a página terminar de carregar (todas as imagens) aí começa a abertura
+window.addEventListener("load", abrirArquivo);

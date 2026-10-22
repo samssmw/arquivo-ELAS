@@ -34,7 +34,8 @@
 
     <main>
         <!-- o palco é a caixa que guarda a máquina inteira, todas as imagens ficam dentro dele -->
-        <div class="palco" id="palco">
+        <!-- a classe "antes" deixa as animações de entrada paradas até a pasta sair da tela (o JS tira ela) -->
+        <div class="palco antes" id="palco">
 
             <!-- imagens do fundo -->
             <img class="peca galaxia" src="Midias/Maq/Galaxia.png" alt="Galáxia">
@@ -124,6 +125,12 @@
             <!-- barrinha :> -->
             <div class="bola" id="bola">
                 <img src="Midias/Maq/Bola.png" alt="Bolinha">
+            </div>
+
+            <!-- a pasta do arquivo: cobre a máquina quando a página abre
+                 o JS faz ela subir e sair da tela, e aí a máquina aparece -->
+            <div class="arquivo" id="arquivo">
+                <img src="Midias/Maq/Arquivo.svg" alt="Arquivo - Essential Leaders in Advancing Science">
             </div>
 
         </div>

@@ -29,7 +29,7 @@
 .titulo   { left: 30.046%; top: 64.676%; width: 66.330%; z-index: 4; }
 .tela     { left: 24.173%; top: -6.081%; width: 79.075%; z-index: 3; }
 
-/* mão com a lupa (o filter faz o contornozinho branco) */
+/* mão com a lupa*/
 .mao {
     left: -4.974%;
     top: 49.031%;
@@ -133,7 +133,7 @@
 }
 
 
-/* ---------- botões ---------- */
+/* botões*/
 
 /* vale para todos os botões do palco */
 .palco button {
@@ -151,7 +151,7 @@
 }
 
 
-/* ---------- seleção do ano ---------- */
+/* seleção do ano */
 
 .seta {
     left: 6.808%;
@@ -173,7 +173,7 @@
     top: -15.036%;
 }
 
-/* a seta de baixo é a mesma imagem, só que virada de cabeça pra baixo */
+/* a seta de baixo é a mesma imagem soq virada de cabeça pra baixo */
 .seta-baixo img {
     left: -4.036%;
     top: -78.164%;
@@ -188,7 +188,7 @@
 .seta-cima:active img  { transform: translateY(0.146vw); }
 .seta-baixo:active img { transform: rotate(180deg) translateY(0.146vw); }
 
-/* a pílula branca com o ano */
+/* o treco branco com o ano */
 .ano {
     position: absolute;
     z-index: 5;
@@ -196,7 +196,7 @@
     top: 36.849%;
     width: 20.205%;
     height: 10.156%;
-    overflow: hidden;       /* o número some ao sair da pílula */
+    overflow: hidden;      
     display: flex;
     align-items: center;
     justify-content: center;
@@ -207,7 +207,7 @@
     font-size: 4.832vw;
     line-height: 1;
     color: #FF006A;
-    -webkit-text-stroke: 0.073vw #FF006A;   /* deixa o número um pouco mais grosso */
+    -webkit-text-stroke: 0.073vw #FF006A; 
 }
 
 .pronto {
@@ -232,13 +232,13 @@
     transform: scale(.96);
 }
 
-/* depois de apertar, o PRONTO escurece */
+/* depois de apertar o PRONTO escurece */
 .pronto:disabled img {
     filter: brightness(.82);
 }
 
 
-/* ---------- controle (botões invisíveis em cima do desenho) ---------- */
+/* controle */
 
 .dpad {
     width: 3.807%;
@@ -262,7 +262,7 @@
 .dpad-centro { left: 14.641%; top: 13.021%; width: 4.392%; height: 7.812%; }
 
 
-/* ---------- quadradinhos e relógios ---------- */
+/* quadradinhos e relógios */
 
 .quadrados {
     position: absolute;
@@ -282,7 +282,7 @@
     transition: background-color .35s, box-shadow .35s;
 }
 
-/* o JS coloca a classe "ligado" em cada quadrado conforme o carregamento */
+/* o js coloca a classe "ligado" em cada quadrado conforme o carregamento */
 .quadrado.ligado {
     background: #00ff6a;
     box-shadow: 0 0 0.659vw rgba(0, 255, 106, .85);
@@ -308,8 +308,8 @@
     height: 100%;
 }
 
-/* a segunda imagem passa pelo filtro que deixa verde (está no fim do Maq.html)
-   e começa invisível. Quando o relógio ganha a classe "verde" ela aparece */
+/* a segunda imagem passa pelo filtro que deixa verde
+   e começa invisivel. Quando o relógio ganha a classe "verde" ela aparece */
 .r-verde {
     opacity: 0;
     filter: url(#filtro-verde);
@@ -321,16 +321,16 @@
 }
 
 
-/* ---------- bolinha da barra ---------- */
+/* bolinha da barra */
 
 .bola {
     position: absolute;
     z-index: 5;
-    left: 90.996%;      /* o JS muda esse valor para a bolinha andar */
+    left: 90.996%;    
     top: 73.307%;
     width: 2.972%;
     aspect-ratio: 1;
-    transform: translate(-50%, -50%);   /* centraliza a bolinha no ponto left/top */
+    transform: translate(-50%, -50%);   
     border-radius: 50%;
     box-shadow: 0 0 0 0.293vw #f3f3f3, 0 0.146vw 0.512vw 0.293vw rgba(0, 0, 0, .3);
     transition: left 2.8s cubic-bezier(.65, 0, .3, 1) .5s;
@@ -343,19 +343,19 @@
 }
 
 
-/* ---------- círculo branco da transição final ---------- */
+/* círculo da transição final */
 
 .portal {
     position: fixed;
     inset: 0;
     z-index: 1000;
     background: white;
-    clip-path: circle(0 at 50% 50%);   /* começa com tamanho zero, o JS faz crescer */
+    clip-path: circle(0 at 50% 50%);   /* começa com tamanho zero e o js faz crescer */
     pointer-events: none;
 }
 
 
-/* ---------- animações de entrada ---------- */
+/* animações de entrada */
 
 @keyframes surgir          { from { opacity: 0; scale: .95; } }
 @keyframes fade            { from { opacity: 0; } }
@@ -387,18 +387,13 @@
 .galaxia   { animation: entrar-esquerda .8s ease-out .9s backwards; }
 .saturno   { animation: entrar-direita .8s ease-out 1.1s backwards; }
 
-/* detalhes dos lados que se mexem sozinhos.
-   girar, vento e balanco são keyframes que já existem no style.css.
-   O transform-origin é o ponto em volta do qual a imagem gira.
-   As animações que repetem (infinite) não têm atraso, assim não dão "pulo" quando começam. */
-
-/* as engrenagens giram bem devagar (uma volta a cada 60 segundos) */
+/* as engrenagens giram bem devagar */
 .engrenagens {
     animation: fade .6s ease-out .9s backwards,
                girar 60s linear infinite;
 }
 
-/* as plantas balançam como se tivesse vento, presas na base do caule */
+/* as plantas balançam como se tivesse vento*/
 .planta-esq {
     transform-origin: 84% 100%;
     animation: entrar-esquerda .8s ease-out .9s backwards,
@@ -408,10 +403,10 @@
 .planta-dir {
     transform-origin: 79% 100%;
     animation: entrar-direita .8s ease-out 1.05s backwards,
-               vento 9s ease-in-out infinite;   /* duração diferente da outra planta, pra não balançarem juntas */
+               vento 9s ease-in-out infinite;   /* duração diferente da outra planta pra nn balançarem juntas */
 }
 
-/* a ampulheta balança bem devagar, apoiada na base */
+/* a ampulheta balança bem devagar */
 .ampulheta {
     transform-origin: 50% 95%;
     animation: entrar-direita .8s ease-out 1s backwards,
@@ -425,9 +420,31 @@
                balanco 6s ease-in-out infinite;
 }
 
-/* a mão primeiro entra e depois começa a balançar (duas animações separadas por vírgula) */
+/* a mão primeiro entra e depois começa a balançar */
 .mao {
-    transform-origin: 25% 88%;   /* ponto onde a mão gira (o pulso) */
+    transform-origin: 25% 88%;  
     animation: entrar-esquerda .8s ease-out 1s backwards,
                lupa-investiga 9s ease-in-out 2.6s infinite;
+}
+
+
+/* pasta*/
+
+/* enquanto a pasta ta na tela as animações de entrada da maq ficam paradas
+   o js tira a classe "antes" do palco na hora certa e ai elas começam */
+.antes > :not(.arquivo) {
+    animation-play-state: paused;
+}
+
+.arquivo {
+    position: absolute;
+    inset: 0;
+    z-index: 20;     
+    animation: fade .7s ease-out backwards;   
+}
+
+.arquivo img {
+    display: block;
+    width: 100%;
+    height: 100%;
 }
