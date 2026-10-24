@@ -6,10 +6,13 @@
 // só o 2026 é de verdade, os outros quatro são exemplos
 const ANOS = [
     { ano: 2026, pagina: "2026.html" },
-    { ano: 1988, pagina: "1988.html" },
-    { ano: 1964, pagina: "1964.html" },
+    { ano: 1956, pagina: "1956.html" },
     { ano: 1952, pagina: "1952.html" },
-    { ano: 1903, pagina: "1903.html" },
+    { ano: 1950, pagina: "1950.html" },
+    { ano: 1945, pagina: "1945.html" },
+    { ano: 1915, pagina: "1915.html" },
+    { ano: 1905, pagina: "1905.html" },
+    { ano: 1856, pagina: "1856.html" },
 ];
 
 // tempo do carregamento
