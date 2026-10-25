@@ -5,7 +5,6 @@
 // "pagina" é o arquivo que abre quando clica na tela no final
 // só o 2026 é de verdade, os outros quatro são exemplos
 const ANOS = [
-    { ano: 2026, pagina: "2026.html" },
     { ano: 1956, pagina: "1956.html" },
     { ano: 1952, pagina: "1952.html" },
     { ano: 1950, pagina: "1950.html" },
