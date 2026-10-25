@@ -83,4 +83,21 @@ color: #FF006A;
     color: #fff;
 }
 
+.email-contato>span{
+    color: #FF006A;
+    text-decoration: none;
+    font-size: 18px;
+}
 
+.email-contato{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 10px;
+}
+.email-contato>img{
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
