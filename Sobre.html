@@ -6,10 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sobre</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" href="Midias/ELAS.svg">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="sobre.css">
+    <link rel="icon" type="image/png" href="Midias/ELAS.svg">
 </head>
 
 <body>
@@ -31,105 +29,93 @@
                 <img src="Midias/LogoInstagramRosa.PNG" alt="Instagram">
             </a>
         </div>
-
     </header>
 
-    <main class="container secao-sobre">
+    <main class="secao-sobre">
+        <!-- enfeites flutuantes (depois é só trocar pelas artes finais) -->
+        <img class="enfeite e-estrela" src="Midias/Estrela.png" alt="">
+        <img class="enfeite e-livros" src="Midias/Livros.png" alt="">
+        <img class="enfeite e-lupa" src="Midias/6.png" alt="">
+        <img class="enfeite e-camera" src="Midias/Camera.png" alt="">
+        <img class="enfeite e-planta1" src="Midias/Planta.png" alt="">
+        <img class="enfeite e-planta2" src="Midias/Planta.png" alt="">
+
         <h2 class="titulo-secao">Sobre o Projeto</h2>
 
+        <!-- as abas funcionam só com CSS: cada botão (label) marca um radio escondido -->
         <div class="abas">
             <input type="radio" name="aba" id="aba1" checked>
             <input type="radio" name="aba" id="aba2">
             <input type="radio" name="aba" id="aba3">
             <input type="radio" name="aba" id="aba4">
-            <ul class="nav nav-pills justify-content-center mb-4 menu-abas">
-                <li class="nav-item"><label class="nav-link" for="aba1">PROJETO</label></li>
-                <li class="nav-item"><label class="nav-link" for="aba2">EQUIPE</label></li>
-                <li class="nav-item"><label class="nav-link" for="aba3">EVENTO</label></li>
-                <li class="nav-item"><label class="nav-link" for="aba4">CONTATO</label></li>
+
+            <ul class="menu-abas">
+                <li><label class="nav-link" for="aba1">PROJETO</label></li>
+                <li><label class="nav-link" for="aba2">EQUIPE</label></li>
+                <li><label class="nav-link" for="aba3">EVENTO</label></li>
+                <li><label class="nav-link" for="aba4">CONTATO</label></li>
             </ul>
+
             <div class="conteudo-abas">
 
                 <section class="painel painel1">
-                    <br>
-                    <h3>OQUE É NOSSO PROJETO?</h3>
-                    <p>Trata-se de uma plataforma digital interativa e inovadora que integra conhecimentos de
-                        diversas disciplinas do Ensino Médio com a área técnica, promovendo uma imersão tecnológica e
-                        histórica.</p>
-                    <br>
-                    <hr><br>
+                    <h3>O QUE É O ARQUIVO E.L.A.S.?</h3>
+                    <p>Imagine uma máquina do tempo que leva você direto ao ano em que uma mulher mudou a ciência.
+                        É isso! O <b>Arquivo E.L.A.S.</b> (<i>Essential Leaders in Advancing Science</i>) é um site
+                        interativo onde cada ano guarda uma cientista, uma descoberta e uma história que muita gente
+                        nunca ouviu.</p>
+                    <br><hr><br>
                     <h3>NOSSA PROPOSTA</h3>
-                    <P>O site foi pensado para unir educação, interatividade e valorização histórica por meio de
-                        ferramentas como a Máquina do Tempo, permitindo que os usuários explorem épocas, fatos e
-                        naveguem por uma interface moderna, funcional e dinâmica.</P>
-                    <br>
-                    <hr><br>
+                    <p>Misturar <b>história, ciência e tecnologia</b> de um jeito leve: você gira a Máquina do Tempo,
+                        escolhe um ano, conhece a cientista e ainda testa o que aprendeu em um mini jogo.
+                        Aprender virou aventura! 🚀</p>
+                    <br><hr><br>
                     <h3>OBJETIVOS</h3>
-                    <p>I. Proporcionar uma experiência rica de troca de conhecimentos e imersão tecnológica. <br><br>
-                        II. Dar visibilidade a um trabalho de alto nível desenvolvido por estudantes alinhados às
-                        exigências e
-                        inovações da instituição. <br><br>
-                        III.Oferecer um ambiente de fácil utilização, com layout atrativo,
-                        interativo e focado na melhor experiência para quem acessa.</p>
-
+                    <ul class="lista">
+                        <li>🔬 Dar visibilidade às mulheres que fizeram ciência e muitas vezes ficaram sem o crédito.</li>
+                        <li>💻 Juntar as disciplinas do Ensino Médio com o curso técnico em uma experiência tecnológica.</li>
+                        <li>✨ Criar um site bonito, fácil de usar e feito para ser explorado.</li>
+                    </ul>
                 </section>
 
                 <section class="painel painel2">
-                    <br>
-                    <h3>QUEM É A EQUIPE?</h3>
+                    <h3>QUEM FAZ O ARQUIVO?</h3>
+                    <p>Três estudantes e uma missão: mostrar que ciência também é coisa de mulher!</p>
                     <h2>Yasmin Giovanna Costa Amaral</h2>
                     <h2>Flávio Soares Martins</h2>
                     <h2>Marco Antonio Carraro</h2>
                 </section>
 
                 <section class="painel painel3">
-                    <br>
                     <h3>O QUE É A MTEC?</h3>
-                    <p>A “IX Mostra Técnica de Projetos dos Cursos Técnicos Integrados ao Ensino
-                        Médio” (MTEC 2026) é um evento anual realizado pelos professores e alunos dos
-                        Cursos Técnicos Integrados ao Ensino Médio do IFTM, Campus Uberaba Parque
-                        Tecnológico. <br>Nesta mostra são expostos trabalhos relacionados a todas as disciplinas
-                        dos cursos técnicos desenvolvidos pelos alunos do Ensino Médio matriculados no IFTM
-                        Campus Uberaba Parque Tecnológico.</p>
-                    <br>
-                    <hr>
-                    <br>
-                    <h3>QUAIS OS OBJETIVOS DO EVENTO?</h3>
-                    <br>
-                    <p> I. Proporcionar momentos de troca de conhecimento e experiência entre os alunos,
-                        professores dos Cursos Técnicos Integrados ao Ensino Médio; <br><br>
-                        II. Dar visibilidade aos trabalhos de alto nível desenvolvidos pelos alunos; <br><br>
-                        III. Oportunizar a integração de diversas disciplinas na forma de projeto de
-                        desenvolvimento, bem como oportunizar a integração empresa-instituto; <br><br>
-                        A fim de alcançar os objetivos do evento, os alunos deverão desenvolver um
-                        trabalho que integre o máximo de conhecimento já adquirido no curso, e/ou que ainda,
-                        envolva alguma inovação tecnológica.
-                    </p>
-                    <br>
-                    <hr>
-                    <br>
+                    <p>A <b>IX Mostra Técnica de Projetos dos Cursos Técnicos Integrados ao Ensino Médio</b> (MTEC 2026)
+                        é um evento anual do IFTM, Campus Uberaba Parque Tecnológico. Os alunos do Ensino Médio
+                        mostram projetos que juntam o que aprenderam em várias disciplinas do curso técnico.</p>
+                    <br><hr><br>
+                    <h3>PARA QUE SERVE O EVENTO?</h3>
+                    <ul class="lista">
+                        <li>🤝 Trocar conhecimento e experiência entre alunos e professores.</li>
+                        <li>🌟 Dar visibilidade aos trabalhos de alto nível feitos pelos alunos.</li>
+                        <li>🧩 Integrar várias disciplinas em um projeto, com espaço para inovação tecnológica e para a ligação entre empresa e instituto.</li>
+                    </ul>
+                    <br><hr><br>
                     <h3>REGULAMENTO</h3>
                     <a id="regulamento" href="Midias/regulamento.pdf" target="_blank">Regulamento.pdf</a>
-
                 </section>
 
                 <section class="painel painel4">
-                    <br>
-                    <h3>CONTATO</h3>
+                    <h3>VAMOS CONVERSAR?</h3>
                     <p>Acompanhe as novidades no nosso Instagram!</p>
                     <a href="https://www.instagram.com/arquivoe.l.a.s" target="_blank">
                         <img src="Midias/LogoInstagramRosa.PNG" alt="Instagram" width="50">
                     </a>
-                    <br>
-                    <p>Email da Nossa equipe:</p>
-
+                    <p>Ou mande um e-mail para a equipe:</p>
                     <a href="mailto:elas17747@gmail.com">
-                    <div class="email-contato">
-                        <img src="Fontes/WhatsApp Image 2026-10-25 at 18.07.12.jpeg" alt="ícone de e-mail">
-                        <span class="email-link">elas17747@gmail.com</span>
-                    </div>
+                        <div class="email-contato">
+                            <img src="Fontes/WhatsApp Image 2026-10-25 at 18.07.12.jpeg" alt="ícone de e-mail">
+                            <span class="email-link">elas17747@gmail.com</span>
+                        </div>
                     </a>
-
                 </section>
 
             </div>

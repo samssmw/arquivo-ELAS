@@ -3,15 +3,15 @@
 
 // lista dos anos, do mais novo pro mais antigo
 // "pagina" é o arquivo que abre quando clica na tela no final
-// só o 2026 é de verdade, os outros quatro são exemplos
+// as páginas dos anos ficam dentro da pasta "anos"
 const ANOS = [
-    { ano: 1956, pagina: "1956.html" },
-    { ano: 1952, pagina: "1952.html" },
-    { ano: 1950, pagina: "1950.html" },
-    { ano: 1945, pagina: "1945.html" },
-    { ano: 1915, pagina: "1915.html" },
-    { ano: 1905, pagina: "1905.html" },
-    { ano: 1856, pagina: "1856.html" },
+    { ano: 1956, pagina: "anos/1956.html" },
+    { ano: 1952, pagina: "anos/1952.html" },
+    { ano: 1950, pagina: "anos/1950.html" },
+    { ano: 1945, pagina: "anos/1945.html" },
+    { ano: 1915, pagina: "anos/1915.html" },
+    { ano: 1905, pagina: "anos/1905.html" },
+    { ano: 1856, pagina: "anos/1856.html" },
 ];
 
 // tempo do carregamento

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1856 - Eunice Newton Foote</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="ano.css">
+    <link rel="icon" type="image/png" href="../Midias/ELAS.svg">
+</head>
+<body>
+    <!-- tela branca que some devagar quando a página abre -->
+    <div id="fade"></div>
+
+    <header>
+        <div class="logo"><img src="../Midias/Atomo.PNG" alt="Atomo"></div>
+        <nav>
+            <ul class="botoesnav">
+                <li><a href="../index.html">INÍCIO</a></li>
+                <li><a href="../Maq.html">MÁQUINA DO TEMPO</a></li>
+                <li><a href="../Sobre.html">SOBRE</a></li>
+            </ul>
+        </nav>
+        <div class="icones">
+            <a href="https://www.instagram.com/arquivoe.l.a.s" target="_blank"><img src="../Midias/LogoInstagramRosa.PNG" alt="Instagram"></a>
+        </div>
+    </header>
+
+    <!-- a classe "esquerda" ou "direita" escolhe o lado da foto -->
+    <main class="ano-pagina esquerda">
+        <!-- enfeites flutuantes (depois é só trocar pelas artes finais) -->
+        <img class="enfeite e-estrela" src="../Midias/Estrela.png" alt="">
+        <img class="enfeite e-livros" src="../Midias/Livros.png" alt="">
+        <img class="enfeite e-lupa" src="../Midias/6.png" alt="">
+        <img class="enfeite e-planta1" src="../Midias/Planta.png" alt="">
+        <img class="enfeite e-planta2" src="../Midias/Planta.png" alt="">
+
+        <div class="fotos ">
+            <img class="foto" src="../Midias/Cientistas/Eunice.jpg" alt="Eunice Newton Foote">
+        </div>
+
+        <section class="texto">
+            <p class="ano-grande">1856</p>
+            <h1>Eunice Newton Foote</h1>
+            <p class="area">Cientista e inventora (1819–1888)</p>
+            <p class="gancho">Muito antes de alguém falar em aquecimento global, ela já tinha medido o efeito estufa!</p>
+
+            <p class="dica">Role a página e descubra mais ⬇</p>
+        </section>
+    </main>
+
+    <!-- UM POUQUINHO DA HISTÓRIA: texto de um lado e mapa do outro -->
+    <section class="historia esquerda">
+        <div class="bio">
+            <h2>Um pouquinho da história</h2>
+            <p>Eunice nasceu em 1819, numa época em que mulher quase nunca entrava em laboratório. Mesmo assim, ela montou os próprios experimentos, virou inventora e participou da luta pelos direitos das mulheres. A carreira dela teve muitas barreiras e até tentativas de apagamento.</p>
+            <ul class="legenda">
+                <li class="casa">Nasceu em Goshen, Connecticut (EUA)</li>
+                <li class="lab">Viveu e pesquisou no estado de Nova York (EUA)</li>
+            </ul>
+        </div>
+        <div class="mapa">
+            <!-- mapa bem simples: cada polygon é um continente, cada circle é um ponto -->
+            <svg viewBox="0 0 360 180">
+                <polygon class="terra" points="12,24 40,20 85,18 100,22 118,30 125,40 113,46 104,55 99,65 83,64 75,68 85,74 97,81 101,81 93,76 75,70 65,60 56,50 55,41 40,30"/>
+                <polygon class="terra" points="100,81 118,80 130,90 145,96 140,112 132,118 122,128 114,136 111,145 105,140 108,120 110,108 99,95 102,87"/>
+                <polygon class="terra" points="170,54 171,47 179,44 175,42 185,37 188,33 192,35 200,30 210,20 240,21 260,17 290,13 320,18 360,22 360,28 340,32 322,38 315,47 302,50 302,60 290,70 285,80 280,88 278,75 272,68 260,82 253,70 240,65 237,72 223,77 215,60 208,54 200,52 192,52 185,47"/>
+                <polygon class="terra" points="163,69 170,60 175,54 190,53 212,59 215,62 223,78 231,78 220,93 220,105 215,115 207,124 198,124 192,108 189,91 188,85 172,86 163,76"/>
+                <polygon class="terra" points="294,112 302,108 311,102 322,101 326,109 333,117 330,127 320,128 310,122 295,124"/>
+                <polygon class="terra" points="125,30 135,30 160,20 158,8 120,8 108,12"/>
+                <circle class="pino casa" cx="106.8" cy="48.2" r="3.5"/>
+                <circle class="onda" cx="103.2" cy="47.1" r="3.5"/>
+                <circle class="pino lab" cx="103.2" cy="47.1" r="3.5"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- DESCOBERTAS: ao clicar na frase, elas aparecem -->
+    <details class="descobertas">
+        <summary>🔍 Um tubo de vidro, o sol e uma descoberta gigante. Clique para ver! <span class="seta-d">▼</span></summary>
+        <div class="lista-descobertas">
+            <article class="descoberta">
+                <img class="descoberta-img" src="../Midias/Descobertas/1856-1.jpg" alt="Efeito estufa do CO₂">
+                <div class="descoberta-texto">
+                    <p class="descoberta-ano"><span class="icone">🌍</span> 1856</p>
+                    <h3>Efeito estufa do CO₂</h3>
+                    <p class="quem">Por: Eunice Newton Foote</p>
+                    <p>Ela encheu tubos de vidro com gases diferentes e deixou no sol. O gás carbônico esquentou mais que o ar comum: a primeira pista de como o CO₂ aquece o planeta.</p>
+                </div>
+            </article>
+            <article class="descoberta">
+                <img class="descoberta-img" src="../Midias/Descobertas/1856-2.jpg" alt="O ar denso esquenta mais">
+                <div class="descoberta-texto">
+                    <p class="descoberta-ano"><span class="icone">🌡️</span> 1856</p>
+                    <h3>O ar denso esquenta mais</h3>
+                    <p class="quem">Por: Eunice Newton Foote</p>
+                    <p>Eunice também notou que o ar mais denso se aquecia mais que o ar rarefeito, ajudando a entender como a pressão do ar afeta o calor retido.</p>
+                </div>
+            </article>
+            <article class="descoberta">
+                <img class="descoberta-img" src="../Midias/Descobertas/1856-3.jpg" alt="O crédito que ficou com outro">
+                <div class="descoberta-texto">
+                    <p class="descoberta-ano"><span class="icone">📜</span> 1859</p>
+                    <h3>O crédito que ficou com outro</h3>
+                    <p class="quem">Por: John Tyndall</p>
+                    <p>Três anos depois, o físico John Tyndall publicou resultados parecidos e virou o nome famoso do efeito estufa. O trabalho de Eunice só foi lembrado muito tempo depois.</p>
+                </div>
+            </article>
+        </div>
+    </details>
+
+    <section class="final">
+            <p class="curiosidade"><b>Você sabia?</b> O estudo dela foi lido em público por um homem, porque mulheres eram barradas de apresentar trabalhos.</p>
+
+            <!-- mini jogo: data-certa="sim" marca a resposta certa -->
+            <div class="jogo">
+                <h3>Mini jogo: será que você sabe?</h3>
+                <p>Qual gás Eunice descobriu que prende mais calor?</p>
+                <button class="opcao" data-certa="nao">Oxigênio</button>
+                <button class="opcao" data-certa="sim">Gás carbônico (CO₂)</button>
+                <button class="opcao" data-certa="nao">Hélio</button>
+                <p class="resposta"></p>
+            </div>
+    </section>
+
+    <section class="voltar-area">
+        <a class="voltar" id="voltar" href="../Maq.html">
+            <img src="../Midias/Relogio.png" alt="Relógio">
+            <span>VOLTAR PARA A MÁQUINA</span>
+        </a>
+    </section>
+
+    <script src="ano.js"></script>
+</body>
+</html>

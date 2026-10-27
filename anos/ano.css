@@ -1,0 +1,308 @@
+/* PÁGINA DE CADA ANO
+   Usa junto o style.css (navbar, fontes e animações) */
+
+/* tela branca que some devagar quando a página abre
+   (continua o círculo branco da máquina do tempo) */
+#fade {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: white;
+    pointer-events: none;
+    animation: clarear 1.2s ease-out forwards;
+}
+
+@keyframes clarear { to { opacity: 0; } }
+
+/* quando clica em voltar, a tela branca volta */
+#fade.saindo { animation: branquear .6s ease-in forwards; }
+
+@keyframes branquear { from { opacity: 0; } to { opacity: 1; } }
+
+/* área principal: foto de um lado e texto do outro */
+.ano-pagina {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5vw;
+    padding: 4vw 8vw 6vw;
+    min-height: 70vh;
+    color: white;
+    font-family: Conforta;
+    background: radial-gradient(circle at 25% 40%, rgba(255, 0, 106, .22), transparent 45%);
+}
+
+/* na classe "direita" a foto vai para o lado direito */
+.ano-pagina.direita {
+    flex-direction: row-reverse;
+    background: radial-gradient(circle at 75% 40%, rgba(255, 0, 106, .22), transparent 45%);
+}
+
+/* foto */
+.fotos { position: relative; z-index: 1; display: flex; gap: 1.5vw; }
+
+.foto {
+    width: 26vw;
+    height: auto;
+    align-self: flex-start;
+    border: .25vw solid #FF006A;
+    border-radius: 1.5vw;
+    box-shadow: 0 0 2.5vw rgba(255, 0, 106, .55);
+    animation: aparecer .8s ease-out .5s backwards, flutuar 6s ease-in-out 1.3s infinite;
+}
+
+/* quando tem duas cientistas, as fotos ficam lado a lado e menores */
+.fotos.duas .foto { width: 14vw; }
+.fotos.duas .foto:nth-child(2) { animation-delay: .7s, 1.8s; margin-top: 3vw; }
+
+/* texto */
+.texto { position: relative; z-index: 1; width: 45vw; }
+
+.ano-grande {
+    margin: 0;
+    font-family: Lemon Fina;
+    font-size: 7vw;
+    line-height: 1;
+    color: #FF006A;
+    text-shadow: 0 0 2vw rgba(255, 0, 106, .6);
+    animation: subir 1s ease-out .3s backwards;
+}
+
+.texto h1 {
+    margin: 0;
+    font-family: Lemon Fina;
+    font-size: 2.4vw;
+    animation: subir 1s ease-out .5s backwards;
+}
+
+.area {
+    display: inline-block;
+    margin: 1vw 0;
+    padding: .3vw 1.2vw;
+    border: 2px solid #FF006A;
+    border-radius: 100px;
+    font-size: 1vw;
+    animation: subir 1s ease-out .7s backwards;
+}
+
+.gancho {
+    margin: .5vw 0 1.2vw;
+    font-size: 1.7vw;
+    font-weight: bold;
+    animation: subir 1s ease-out .9s backwards;
+}
+
+.curiosidade {
+    margin: 0;
+    padding: .8vw 1.2vw;
+    border-left: .3vw solid #FF006A;
+    background: rgba(255, 0, 106, .12);
+    font-size: 1.1vw;
+    line-height: 1.5;
+    animation: subir .8s ease-out 1.9s backwards;
+}
+
+/* mini jogo */
+.jogo {
+    margin-top: 1.5vw;
+    padding: 1.2vw;
+    border: 2px dashed #FF006A;
+    border-radius: 1vw;
+    animation: subir .8s ease-out 2.1s backwards;
+}
+
+.jogo h3 { margin: 0 0 .6vw; font-size: 1.2vw; color: #FF006A; }
+.jogo p { margin: 0 0 .8vw; font-size: 1.1vw; }
+.jogo .resposta { margin: .4vw 0 0; font-weight: bold; }
+
+.opcao {
+    margin: 0 .5vw .5vw 0;
+    padding: .5vw 1.2vw;
+    font-family: Conforta;
+    font-size: 1vw;
+    color: white;
+    background: transparent;
+    border: 2px solid #FF006A;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background-color .3s, scale .2s;
+}
+
+.opcao:hover { background: rgba(255, 0, 106, .4); scale: 1.05; }
+.opcao.certa { background: #00b85c; border-color: #00b85c; }
+.opcao.errada { background: #555; border-color: #555; animation: tremer .4s; }
+
+@keyframes tremer { 25% { translate: -.5vw 0; } 75% { translate: .5vw 0; } }
+
+/* enfeites flutuantes (a classe .enfeite e as animações vêm do style.css) */
+.e-estrela { width: 5vw; top: 5%; left: 47%; animation: aparecer .6s ease-out 1s backwards, girar 14s linear infinite; }
+.e-livros { width: 7vw; bottom: 8%; left: 46%; animation: aparecer .6s ease-out 1.1s backwards, flutuar 4s ease-in-out -1s infinite; }
+.e-lupa { width: 7vw; top: 4%; right: 2%; transform-origin: bottom center; animation: aparecer .6s ease-out 1.2s backwards, investigar 9s ease-in-out infinite; }
+.e-planta1 { width: 11vw; bottom: -2%; left: -3vw; transform-origin: bottom center; animation: aparecer .6s ease-out 1.3s backwards, vento 8s ease-in-out infinite; }
+.e-planta2 { width: 11vw; bottom: -2%; right: -3vw; transform: scaleX(-1); transform-origin: bottom center; animation: aparecer .6s ease-out 1.4s backwards, vento 8s ease-in-out 3s infinite; }
+
+/* botão de voltar (parecido com o da página inicial, mas o relógio gira ao contrário) */
+.voltar-area { display: flex; justify-content: center; padding: 1vw 0 3vw; }
+
+.voltar {
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+    padding: .5vw 3vw;
+    border-left: 2px solid #FF006A;
+    border-right: 2px solid #FF006A;
+    color: white;
+    text-decoration: none;
+    font-family: Lemon Fina;
+    font-size: 1.4vw;
+    transition: background-color .3s, box-shadow .3s, gap .3s;
+}
+
+.voltar img { width: 3.5vw; height: auto; transition: rotate .8s ease; }
+.voltar:hover { gap: 1.8vw; background: rgba(255, 0, 106, .12); box-shadow: 0 0 20px rgba(255, 0, 106, .5); }
+.voltar:hover img { rotate: -360deg; }
+
+/* se o sistema pedir menos animação, a tela branca nem aparece */
+@media (prefers-reduced-motion: reduce) { #fade { display: none; } }
+
+/* celular: tudo em uma coluna e letras maiores */
+@media (max-width: 800px) {
+    .ano-pagina, .ano-pagina.direita { flex-direction: column; padding: 8vw 6vw 16vw; }
+    .foto { width: 60vw; }
+    .fotos.duas .foto { width: 38vw; }
+    .texto { width: 100%; }
+    .ano-grande { font-size: 18vw; }
+    .texto h1 { font-size: 7vw; }
+    .area, .opcao, .jogo h3 { font-size: 3.8vw; }
+    .gancho { font-size: 4.8vw; }
+    .fatos li, .curiosidade, .jogo p { font-size: 3.8vw; }
+    .voltar { font-size: 4vw; }
+    .voltar img { width: 9vw; }
+}
+
+
+/* ---------- NOVAS SEÇÕES: história, mapa e descobertas ---------- */
+
+.dica { margin-top: 1.5vw; font-size: 1vw; color: #FF006A; animation: flutuar 2s ease-in-out infinite; }
+
+/* um pouquinho da história: texto de um lado e mapa do outro */
+.historia { display: flex; align-items: center; gap: 5vw; padding: 4vw 8vw; color: white; font-family: Conforta; }
+.historia.direita { flex-direction: row-reverse; }
+.bio, .mapa { flex: 1; }
+.bio h2, .final h2 { margin: 0 0 1vw; font-family: Lemon Fina; font-size: 2.2vw; color: #FF006A; }
+.bio p { margin: 0; font-size: 1.3vw; line-height: 1.6; }
+
+.legenda { list-style: none; padding: 0; margin: 1.5vw 0 0; }
+.legenda li { display: flex; align-items: center; gap: .8vw; margin-bottom: .6vw; font-size: 1.05vw; }
+.legenda li::before { content: ""; flex-shrink: 0; width: 1vw; height: 1vw; border-radius: 50%; }
+.legenda .casa::before { background: white; }
+.legenda .lab::before { background: #FF006A; box-shadow: 0 0 .8vw #FF006A; }
+
+/* mapa */
+.mapa svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: .25vw solid #FF006A;
+    border-radius: 1.5vw;
+    background: rgba(255, 0, 106, .07);
+    box-shadow: 0 0 2.5vw rgba(255, 0, 106, .4);
+}
+
+.terra { fill: rgba(255, 0, 106, .28); stroke: #FF006A; stroke-width: .6; stroke-linejoin: round; }
+.pino.casa { fill: white; }
+.pino.lab { fill: #FF006A; }
+
+/* o anel que cresce e some faz o ponto "piscar" */
+.onda { fill: none; stroke: #FF006A; stroke-width: 1; transform-box: fill-box; transform-origin: center; animation: piscar 1.8s ease-out infinite; }
+
+@keyframes piscar { from { scale: .5; opacity: 1; } to { scale: 4; opacity: 0; } }
+
+/* frase clicável que abre as descobertas */
+.descobertas { padding: 2vw 8vw; color: white; font-family: Conforta; }
+
+.descobertas summary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5vw;
+    max-width: 60vw;
+    margin: 0 auto;
+    padding: 1.3vw 2.5vw;
+    border: 2px solid #FF006A;
+    border-radius: 100px;
+    background: rgba(255, 0, 106, .12);
+    font-size: 1.5vw;
+    font-weight: bold;
+    text-align: center;
+    list-style: none;
+    cursor: pointer;
+    animation: brilho-borda 2.5s ease-in-out infinite;
+    transition: background-color .3s;
+}
+
+.descobertas summary::-webkit-details-marker { display: none; }
+.descobertas summary:hover { background: rgba(255, 0, 106, .35); }
+.seta-d { transition: rotate .4s; }
+.descobertas[open] .seta-d { rotate: 180deg; }
+
+/* cada descoberta: imagem de um lado (alternando) e texto do outro */
+.lista-descobertas { max-width: 80vw; margin: 3vw auto 0; }
+.descoberta { display: flex; align-items: center; gap: 3vw; margin-bottom: 4vw; }
+.descoberta:nth-child(even) { flex-direction: row-reverse; }
+
+.descoberta-img {
+    width: 22vw;
+    height: auto;
+    border: .25vw solid #FF006A;
+    border-radius: 1.5vw;
+    box-shadow: 0 0 2.5vw rgba(255, 0, 106, .45);
+    transition: scale .3s;
+}
+
+.descoberta-img:hover { scale: 1.05; }
+
+.descoberta-texto { flex: 1; padding-left: 1.5vw; border-left: .3vw solid #FF006A; }
+.descoberta-texto p { margin: 0; font-size: 1.15vw; line-height: 1.6; }
+.descoberta-texto .descoberta-ano { display: flex; align-items: center; gap: .8vw; font-family: Lemon Fina; font-size: 1.6vw; color: #FF006A; }
+.icone { display: inline-block; font-size: 2.2vw; animation: flutuar 3s ease-in-out infinite; }
+.descoberta-texto h3 { margin: .3vw 0 .6vw; font-family: Lemon Fina; font-size: 1.9vw; }
+
+/* a primeira descoberta ganha mais destaque */
+.descoberta:first-child h3 { font-size: 2.4vw; text-shadow: 0 0 1.5vw rgba(255, 0, 106, .7); }
+
+.descoberta-texto .quem { display: inline-block; margin-bottom: .8vw; padding: .2vw 1vw; border: 2px solid white; border-radius: 100px; font-size: .95vw; }
+
+/* quando abre, as descobertas entram uma de cada vez */
+.descobertas[open] .descoberta { animation: subir .8s ease-out backwards; }
+.descobertas[open] .descoberta:nth-child(2) { animation-delay: .25s; }
+.descobertas[open] .descoberta:nth-child(3) { animation-delay: .5s; }
+.descobertas[open] .descoberta:nth-child(4) { animation-delay: .75s; }
+.descobertas[open] .descoberta:nth-child(5) { animation-delay: 1s; }
+.descobertas[open] .descoberta:nth-child(6) { animation-delay: 1.25s; }
+
+/* curiosidade e mini jogo no final */
+.final { max-width: 60vw; margin: 2vw auto 0; padding-bottom: 2vw; color: white; font-family: Conforta; }
+.final .curiosidade, .final .jogo { animation: none; }
+
+@media (max-width: 800px) {
+    .historia, .historia.direita { flex-direction: column; padding: 8vw 6vw; }
+    .bio, .mapa { flex: none; width: 100%; }
+    .bio h2, .final h2 { font-size: 6vw; }
+    .bio p { font-size: 4vw; }
+    .legenda li { font-size: 3.6vw; }
+    .legenda li::before { width: 3vw; height: 3vw; }
+    .dica { font-size: 3.6vw; }
+    .descobertas summary { max-width: 90vw; padding: 3vw 4vw; font-size: 4.2vw; }
+    .lista-descobertas { max-width: 88vw; }
+    .descoberta, .descoberta:nth-child(even) { flex-direction: column; align-items: flex-start; gap: 3vw; }
+    .descoberta-img { width: 75vw; }
+    .descoberta-texto p { font-size: 3.8vw; }
+    .descoberta-texto .descoberta-ano { font-size: 5vw; }
+    .descoberta-texto h3, .descoberta:first-child h3 { font-size: 6vw; }
+    .descoberta-texto .quem { font-size: 3.4vw; }
+    .icone { font-size: 7vw; }
+    .final { max-width: 88vw; }
+}
